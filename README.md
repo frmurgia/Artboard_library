@@ -1,6 +1,7 @@
-**Artboard**
 
-*prototyping board for artist*
+#   **Artboard**
+
+## *prototyping board for artist*
 
 
 
@@ -8,7 +9,7 @@
 è una scheda di espansione per teensy 3.6, rivolta ad artisti e designer.
 
 
-Principali features:
+*Principali features:*
 
 
 • 12 ingressi capacitivi 
