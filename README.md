@@ -1,4 +1,4 @@
-** Artboard **
+**Artboard**
 
 *prototyping board for artist*
 
