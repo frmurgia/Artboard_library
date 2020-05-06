@@ -5,24 +5,24 @@
 
 
 
-
-Artboard è una scheda di espansione per teensy 3.6, rivolta ad artisti e designer.
-
-
-*Principali features:*
+Artboard is a breakout board board for teensy 3.6,  for artists, designers and musicians.
+ rivolta ad artisti e designer.
 
 
-• 12 ingressi capacitivi 
+*main features:*
 
-• 7 potenziometri
 
-• 6 uscite PWM
+• 12 capacitive inputs
 
-• 16 ingressi/uscite digitali/analogice o capacitive 
+• 6 potentiometers
 
-• Area di prototipazione con alimentazione esterna
+• 6  PWM outs
 
-• 2 uscite stereofoniche 
+• 16 external in/out digital/analog or capacitive 
+
+• prototype area with external power
+
+• stereo audio output 
 
 • 1 led RGB
  
