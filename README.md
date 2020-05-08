@@ -6,7 +6,7 @@
 
 
 Artboard is a breakout board board for teensy 3.6,  for artists, designers and musicians.
- rivolta ad artisti e designer.
+
 
 
 *main features:*
