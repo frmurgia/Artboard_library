@@ -31,4 +31,4 @@ Artboard is a breakout board board for teensy 3.6,  for artists, designers and m
  
 
 
-![Drag Racing](https://github.com/frmurgia/Artboard_library/blob/master/arboard_board-01.png?raw=true)
+![Drag Racing](https://github.com/frmurgia/Artboard_library/blob/master/art-board_01.jpg)
