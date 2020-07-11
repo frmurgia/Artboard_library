@@ -1,7 +1,7 @@
 
 #   **Artboard**
+[## *prototyping board for artist*](https://www.youtube.com/watch?v=JZZfKKglsCU&feature=youtu.be)
 
-## *prototyping board for artist*
 
 
 During the pandemic period, I made this pcb to teach physical computing to my students.
