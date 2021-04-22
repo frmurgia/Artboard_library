@@ -79,7 +79,7 @@ int Artboard::touch(int channel){
 		digitalWrite(enablePin, LOW); // start enabled
 	}
 
-	int pins[4] = {12,24,33,34};
+	int pins[4] = {2,3,4,5};
 	int i 		= 0;
 
 	for(i=0;i<4;i++){
@@ -95,7 +95,7 @@ int Artboard::touch(int channel){
 		lastIO = Artboard_IO_READ;
 	}
 	setChannel(channel);
-	return touchRead(29);
+	return touchRead(30);
 }
 
 
@@ -128,10 +128,10 @@ void Artboard::write(int channel, int value){
 */
 void Artboard::setChannel(int channel){
 	if(currentChannel != channel) {
-		digitalWrite(12, bitRead(channel,0));
-		digitalWrite(24, bitRead(channel,1));
-		digitalWrite(33, bitRead(channel,2));
-		digitalWrite(34, bitRead(channel,3));
+		digitalWrite(2, bitRead(channel,0));
+		digitalWrite(3, bitRead(channel,1));
+		digitalWrite(4, bitRead(channel,2));
+		digitalWrite(5, bitRead(channel,3));
 		currentChannel = channel;
 	}
 }
