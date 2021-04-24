@@ -14,21 +14,21 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 12 capacitive inputs
 
-• 6 potentiometers
+• 8 potentiometers
 
-• 6  PWM outs
+• 8 tactile button
 
-• 16 external in/out digital/analog or capacitive 
+• 1 switch on/off
 
-• prototype area with external power
+• teensy audio shield pins
+
+• wifi connection (ESP12S)
+
+• 12 in/out 
+
+• prototype area 
 
 • stereo audio output 
 
 • 1 led RGB
  
- 
- 
- 
-
-
-![Drag Racing](https://github.com/frmurgia/Artboard_library/blob/master/art-board_01.jpg)
