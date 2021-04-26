@@ -14,7 +14,7 @@
 class Artboard {
 
    public:
-s
+
 	/**
 	* Constructor - you'll need to call Artboard::setup later if not passing parameters here.
 	*/
