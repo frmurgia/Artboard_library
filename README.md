@@ -44,9 +44,9 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 1 ESP-12S
 
-• predisposition for teensy audioshield
+• footprints for teensy audioshield
 
-• predisposition for ESP-01 in case of emergency
+
 
 ##   **library**
 
