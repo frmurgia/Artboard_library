@@ -86,7 +86,7 @@ class Artboard {
   int currentChannelB;
 
 	void setChannel(int channel);
-  void setChannelB(int channel);
+
 
 };
 
