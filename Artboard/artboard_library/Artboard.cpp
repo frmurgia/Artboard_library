@@ -141,7 +141,7 @@ int Artboard::button(int channel){
 		pinMode(39, INPUT);
 		lastIO = Artboard_IO_READ;
 	}
-	setChannelButton(channel);
+	setChannel(channel);
 	return digitalRead(39);
 }
 
@@ -180,20 +180,10 @@ void Artboard::setChannel(int channel){
 		digitalWrite(3, bitRead(channel,1));
 		digitalWrite(4, bitRead(channel,2));
 		digitalWrite(5, bitRead(channel,3));
-		currentChannel = channel;
-	}
-}
-/**
-* @private
-* set the current Artboard channel [0-15] using 4 digtal pins to write the 4 bit integer
-*  for button multiplexer [m0-t7] but also gpio [m8-m15]
-*/
-void Artboard::setChannelButton(int channel){
-	if(currentChannelB != channel) {
 		digitalWrite(24, bitRead(channel,0));
 		digitalWrite(25, bitRead(channel,1));
 		digitalWrite(26, bitRead(channel,2));
 		digitalWrite(27, bitRead(channel,3));
-		currentChannelB = channel;
+		currentChannel = channel;
 	}
 }
