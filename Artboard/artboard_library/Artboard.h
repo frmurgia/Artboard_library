@@ -51,6 +51,12 @@ class Artboard {
 	* @param channel
 	*/
 	int touch(int channel);
+  /**
+  * Read from the chose channell of button multiplex [,0-m7] but also GPIO near breadboard [m8-m15]
+  * @param channel
+  */
+  int button(int channel);
+
 
 
 	/**
@@ -77,8 +83,12 @@ class Artboard {
 
 	int lastIO;
 	int currentChannel;
+  int currentChannelB;
 
 	void setChannel(int channel);
+  void setChannelB(int channel);
+
 };
+
 
 #endif

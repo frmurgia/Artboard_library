@@ -53,6 +53,9 @@ Artboard::Artboard() {
 */
 void Artboard::setEnabled(bool enabled){
 	if(enablePin!=-1){
+
+
+
 		digitalWrite(enablePin, enabled ? LOW : HIGH);
 	}
 }
@@ -99,6 +102,50 @@ int Artboard::touch(int channel){
 }
 
 
+
+
+/**
+* @public
+*
+**/
+
+int Artboard::button(int channel){
+
+	this->dPin0 			= dPin0;
+	this->dPin1 			= dPin1;
+	this->dPin2 			= dPin2;
+	this->dPin3 			= dPin3;
+	this->signalPin 		= signalPin;
+	this->enablePin			= enablePin;
+	currentChannelB 			= -1;
+	lastIO					= -1;
+
+	// using the EN pin?
+	if(enablePin>-1) {
+		pinMode(enablePin, OUTPUT);
+		digitalWrite(enablePin, LOW); // start enabled
+	}
+
+	int pins[4] = {24,25,26,27};
+	int i 		= 0;
+
+	for(i=0;i<4;i++){
+		// set pinMode for the digital control pins
+		pinMode(pins[i], OUTPUT);
+		// set all control pins LOW
+		digitalWrite(pins[i], LOW);
+	}
+
+
+	if(lastIO != Artboard_IO_READ) {
+		pinMode(39, INPUT);
+		lastIO = Artboard_IO_READ;
+	}
+	setChannelButton(channel);
+	return digitalRead(39);
+}
+
+
 /**
 * @public
 *
@@ -125,6 +172,7 @@ void Artboard::write(int channel, int value){
 /**
 * @private
 * set the current Artboard channel [0-15] using 4 digtal pins to write the 4 bit integer
+* for touch multiplexer [t0-t11 on the board]
 */
 void Artboard::setChannel(int channel){
 	if(currentChannel != channel) {
@@ -133,5 +181,19 @@ void Artboard::setChannel(int channel){
 		digitalWrite(4, bitRead(channel,2));
 		digitalWrite(5, bitRead(channel,3));
 		currentChannel = channel;
+	}
+}
+/**
+* @private
+* set the current Artboard channel [0-15] using 4 digtal pins to write the 4 bit integer
+*  for button multiplexer [m0-t7] but also gpio [m8-m15]
+*/
+void Artboard::setChannelButton(int channel){
+	if(currentChannelB != channel) {
+		digitalWrite(24, bitRead(channel,0));
+		digitalWrite(25, bitRead(channel,1));
+		digitalWrite(26, bitRead(channel,2));
+		digitalWrite(27, bitRead(channel,3));
+		currentChannelB = channel;
 	}
 }

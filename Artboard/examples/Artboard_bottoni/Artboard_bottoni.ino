@@ -1,31 +1,44 @@
-/*
-  <><><><><><><><><><><><><><><><><><><>
-  --------------------------------------
-  Titolo progetto: Artboard v2
-  Descrizione: Bottoni
-  by daniele murgia © 2021 MIT License
-  --------------------------------------
-  <><><><><><><><><><><><><><><><><><><>
+
+  /*
+<><><><><><><><><><><><><><><><><><><>
+--------------------------------------
+Titolo progetto: bottoni exemple
+Descrizione: funzionamento libreria button
+
+
+artboard.button(i) per leggere lo stato dei bottoni è sufficente
+chiamarela funzione button all'interno della libreria artboard
+dove i equivale alla posizione del bottone.
+
+la funzione button ritorna un valore digitale.
+
+
+by Daniele Murgia © 2019-20 MIT License
+      sgtmurgia@gmail.com
+--------------------------------------
+<><><><><><><><><><><><><><><><><><><>
+
 */
-/*      TEENSY 3.6 PINOUT     */
-int pot1 = 31; // D31 = A12
-int pot2 = 32 ; // D32 = A13
-int pot3 = 33 ; // D33 = A14
-int pot4 = 34 ; // D34 = A15
-int pot5 = 35 ; // D35 = A16
-int pot6 = 36 ; // D36 = A17
-int pot7 = 37 ; // D37 = A18
-int pot8 = 38 ; // D38 = A19
+#include <Artboard.h> // includiamo la libreria
 
+Artboard artboard; // Istanza
 
-void setup() {
+void setup(){
+
   Serial.begin(9600);
 
 }
 
-void loop() {
-  
 
-  delay(100);
+void loop(){
+  for( int i=0; i<=8; i++){ // leggiamo e stampiamo sulla seriale tutti i valori
+      int val = artboard.button(i);
+      Serial.print("pos: ");
+      Serial.print(i);
+      Serial.print(": ");
+     Serial.print(val);
+       Serial.print(" ");
 
+    }
+   Serial.println();
 }
