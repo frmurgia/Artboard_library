@@ -2,10 +2,8 @@
 #   **Artboard**
 ##   **prototyping board for artist**
 ##   **V 2.0**
-[see the video](https://www.youtube.com/watch?v=JZZfKKglsCU&feature=youtu.be)
 
 
-During the pandemic period, I made this pcb to teach physical computing to my students.
 Artboard is a breakout board board for teensy 3.6 made for artists, designers and musicians.
 
 
@@ -17,13 +15,26 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 8 potentiometers
 
+
 • 8 Buttons
 
 • 5  PWM outs
 
-• 16 external in/out digital/analog or capacitive
+• 12 external in/out
 
-• prototype area with external power
+• 8 tactile button
+
+• 1 switch on/off
+
+• teensy audio shield pins
+
+• wifi connection (ESP12S)
+
+• 1 led RGB
+
+• 12 in/out digital/analog/pwm
+
+• prototype area 
 
 • stereo audio output
 
@@ -54,8 +65,3 @@ constructor artboard();
    return a digital outpu (HIGH or LOW, 0 1)
 
 
-
-
-
-
-![Drag Racing](https://github.com/frmurgia/Artboard_library/blob/master/art-board_01.jpg)
