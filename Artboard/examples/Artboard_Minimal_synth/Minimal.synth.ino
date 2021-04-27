@@ -5,7 +5,7 @@ Titolo progetto: Minimal Synth
 Descrizione: con la funzione touch della libreria artboard  e il tool
 grafico per la libreria audio teensy si crea un semplice sintettizatore monofonico formato da :
 
- oscillatore ad onda sinosuidare --> generatore di inviluppo --> filtro passa basso --> amplificatore
+ oscillatore ad onda sinosuidale --> generatore di inviluppo --> filtro passa basso --> amplificatore
 
 come controlli vengono utilizzati i potenziometri in questo modo:
 
@@ -18,7 +18,8 @@ D35 release
 
 D38 Volume
 
- come uscite audio si utilzzano i dac (digital to analog converter) integrati nell teensy al pin A22 e A21 .
+ come uscite audio si utilzzano i dac (digital to analog converter) integrati nell teensy al pin A22 e A21 ,
+ che nel Artboard corisspondono al uscita minijack stereo DAC0
 
 by Jackeightgoods © 2020-21 MIT License
       otto@insiberia.net
@@ -72,7 +73,7 @@ AudioMemory(13);
   //imposto il volume del oscilattore ad 1
 sine1.amplitude(1);
 
-//inizzializzo lo stato dei tasti per nonan avere problemi
+//inizzializzo lo stato dei tasti per non avere problemi
 mn=0;
   mnb =-1;
 }
@@ -90,7 +91,7 @@ float rel= analogRead(35);
 
 float vol= analogRead(38);
 
-// mappo e imposto i valori del potenziometri
+// mappo e imposto i valori dei potenziometri
 filter1.frequency(map(cut,0.00,1023.00,0,440));
 filter1.resonance(map(res,0,1023,0.7,5));
 
@@ -108,13 +109,13 @@ amp1.gain(map(vol,0,1023,0,4));
 
      }
 
-    //verifico se qualche tasto è premuro
+    //verifico se qualche tasto è premuto
     for ( int i =0; i<12; i++){
     state += key[i];
 
 
     if (key[i] ==1){
-      //salvo il tasto più alto più alto schiacciato
+      //salvo il tasto più alto schiacciato
       Serial.println(i);
       mn=i;
       }
@@ -131,7 +132,7 @@ amp1.gain(map(vol,0,1023,0,4));
       //se nessun tasto è schiacciato faccio smettere il suono
       envelope1.noteOff();
       Serial.println("off");
-      //imposto il precedsente tast su un tasto impossible per non avere problemi
+      //imposto il precedente tast su un tasto impossible per non avere problemi
       mnb=-1;
       }else{
 
