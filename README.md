@@ -1,7 +1,8 @@
 
 #   **Artboard**
 ##   **prototyping board for artist**
-[see the video](https://www.youtube.com/watch?v=JZZfKKglsCU&feature=youtu.be)
+##   **V 2.0**
+
 
 Artboard is a breakout board board for teensy 3.6 made for artists, designers and musicians.
 
@@ -14,6 +15,13 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 8 potentiometers
 
+
+• 8 Buttons
+
+• 5  PWM outs
+
+• 12 external in/out
+
 • 8 tactile button
 
 • 1 switch on/off
@@ -22,11 +30,38 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • wifi connection (ESP12S)
 
-• 12 in/out 
+• 1 led RGB
+
+• 12 in/out digital/analog/pwm
 
 • prototype area 
 
-• stereo audio output 
+• stereo audio output
 
-• 1 led RGB
- 
+• stereo audio input
+
+• 8 diglta rgb led
+
+• 1 ESP-12S
+
+• predisposition for teensy audioshield
+
+• predisposition for ESP-01 in case of emergency
+
+##   **library**
+
+constructor artboard();
+
+
+##   **Function**
+
+ artboard.touch(int channel);
+
+  this funtion Read from the chosen channel of touch multiplexer.
+
+  artboard.button(int channel);
+
+   this funtion Read from the chosen channel of button multiplexer.
+   return a digital outpu (HIGH or LOW, 0 1)
+
+
