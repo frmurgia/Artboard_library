@@ -15,10 +15,7 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 8 potentiometers
 
-
 • 8 Buttons
-
-• 5  PWM outs
 
 • 12 external in/out
 
@@ -26,15 +23,13 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 1 switch on/off
 
-• teensy audio shield pins
+• teensy audio shield footprints
 
 • wifi connection (ESP12S)
 
 • 1 led RGB
 
 • 12 in/out digital/analog/pwm
-
-• prototype area 
 
 • stereo audio output
 
@@ -44,7 +39,7 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 1 ESP-12S
 
-• footprints for teensy audioshield
+
 
 
 
