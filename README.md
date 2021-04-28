@@ -50,13 +50,10 @@ constructor artboard();
 
 ##   **Function**
 
- artboard.touch(int channel);
+ artboard.touch(0-11);
 
-  this funtion Read from the chosen channel of touch multiplexer.
+ artboard.button(0-7);
 
-  artboard.button(int channel);
-
-   this funtion Read from the chosen channel of button multiplexer.
-   return a digital outpu (HIGH or LOW, 0 1)
+ artboard.pot(0-7);
 
 
