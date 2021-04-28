@@ -1,7 +1,7 @@
 
 #   **Artboard**
 ##   **prototyping board for artist**
-##   **V 2.0**
+
 
 
 Artboard is a breakout board board for teensy 3.6 made for artists, designers and musicians.
