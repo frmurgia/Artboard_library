@@ -113,26 +113,21 @@ int Artboard::touch(int channel){
 //potentiometer ///////////
 int Artboard::pot(int pin){
 	int val;
+
 	int pins[8] = {31,32,33,34,35,36,37,38};
 		for (int i=1; i<8;i++){
 				pinMode(pins[i], INPUT);
-	 			val=analogRead(pins[pin]);
-		}
-	// subtract the last reading:
-	total = total - readings[readIndex];
-	// read the sensor:
-	readings[readIndex] =  val;
+}
+	val=analogRead(pins[pin]);
+int vals[10]; //array that stores 5 readings.
+for (int i = 0; i < 10; i++) {
+	vals[i] = val;
+}
+float smooth = (vals[0] + vals[1] + vals[2] + vals[3] + vals[4])  / 5;
+return smooth;
 
-	// add value to total:
-	total = total + readings[readIndex];
-	// handle index
-	readIndex = readIndex + 1;
-	  if (readIndex >= 10) {
-	    readIndex = 0;
-	  }
-	  // calculate the average:
-	  average = total / 10;
-	return average;
+
+
 }
 
 
