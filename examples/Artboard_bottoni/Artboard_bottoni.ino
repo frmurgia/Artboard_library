@@ -31,7 +31,7 @@ void setup(){
 
 
 void loop(){
-  for( int i=0; i<=8; i++){ // leggiamo e stampiamo sulla seriale tutti i valori
+  for( int i=0; i<8; i++){ // leggiamo e stampiamo sulla seriale tutti i valori
       int val = artboard.button(i);
       Serial.print("pos: ");
       Serial.print(i);
