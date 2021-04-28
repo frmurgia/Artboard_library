@@ -57,6 +57,7 @@ class Artboard {
   */
   int button(int channel);
 
+int pot(int pin);
 
 
 	/**
@@ -64,6 +65,7 @@ class Artboard {
 	* @return HIGH or LOW
 	*/
 	int dRead(int channel);
+
 
 
 	/**
@@ -74,12 +76,17 @@ class Artboard {
 
 
   protected:
+    // moving avg data
+  int readings[10];
+  int readIndex  = 0;
+  long total  = 0;
+  long average;
 	int enablePin; // EN - HIGH==all outputs disabled, LOW==everything is enabled
-	int signalPin;
-    int dPin0;
-    int dPin1;
-    int dPin2;
-    int dPin3;
+  int signalPin;
+  int dPin0;
+  int dPin1;
+  int dPin2;
+  int dPin3;
 
 	int lastIO;
 	int currentChannel;
