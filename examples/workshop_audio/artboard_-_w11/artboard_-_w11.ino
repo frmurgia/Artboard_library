@@ -2,12 +2,15 @@
   <><><><><><><><><><><><><><><><><><><>
   --------------------------------------
   Titolo progetto: audio workshop
-  Descrizione: premi bottone suona campione
-
+  Descrizione: simple drum_machine
+  pot 0     = tempo
   button 0  = kick
   button 1  = snare
   button 2  = hihat
   button 3  = clap
+  button 4  = resetAll
+  button 5 + button 0-4  = reset singola posizione del sequencer selezionato
+
 
   by Daniele Murgia © 2019-20 MIT License
     sgtmurgia@gmail.com
@@ -38,12 +41,20 @@ AudioConnection          patchCord4(mixer1, 0,   dac0, 1);
 #define SDCARD_SCK_PIN   13  // not actually used
 ///////////////////////////////////
 
-
+int tempo;
 int kick;
 int snare;
 int hihat;
 int clap;
 
+int reset1;
+int undo;
+int sequencer_kick [8];
+int sequencer_snare[8];
+int sequencer_hihat[8];
+int sequencer_clap[8];
+
+int counter = 0;
 
 void setup() {
 
@@ -75,27 +86,85 @@ void loop() {
   snare  =  artboard.button(1);
   hihat  =  artboard.button(2);
   clap   =  artboard.button(3);
+  reset1 =  artboard.button(4);
+  undo   =  artboard.button(5);
 
-  ///////////////////kick///////////////////////
-  if (kick > 0 && playSdWav1.isPlaying()==0) {
+  counter++;
+  //Serial.println(counter);
+  if (counter == 8) {
+    counter = 0;
+  }
+
+  ///////////////////contatore per la cassa////////////////////////
+  if (kick > 0) {
+    sequencer_kick[counter] = 1;
+  }
+
+
+  if (sequencer_kick[counter] == 1) {
     playSdWav1.play("kick.wav");
   }
 
-  ///////////////////SNARE////////////////////////
-  if (snare > 0 && playSdWav1.isPlaying()==0) {
+
+  ///////////////////contatore per SNARE////////////////////////
+  if (snare > 0) {
+    sequencer_snare[counter] = 1;
+  }
+
+  if (sequencer_snare[counter] == 1) {
     playSdWav1.play("snare.wav");
   }
 
-  ///////////////////hihat////////////////////////
-  if (hihat > 0 && playSdWav1.isPlaying()==0) {
+  ///////////////////contatore per hihat////////////////////////
+  if (hihat > 0) {
+    sequencer_hihat[counter] = 1;
+  }
+
+  if (sequencer_hihat[counter] == 1) {
     playSdWav1.play("hihat.wav");
   }
 
-  ///////////////////clap////////////////////////
-  if (clap > 0 && playSdWav1.isPlaying()==0) {
+  ///////////////////contatore per clap////////////////////////
+  if (clap > 0) {
+    sequencer_clap[counter] = 1;
+  }
+
+  if (sequencer_clap[counter] == 1) {
     playSdWav1.play("clap.wav");
   }
 
 
- delay(100);
+  if (reset1 > 0) {
+    for (int a = 0; a < 8; a++) {
+      sequencer_kick[a] = 0;
+      sequencer_snare[a] = 0;
+      sequencer_hihat[a] = 0;
+      sequencer_clap[a] = 0;
+    }
+
+  }
+  if (undo == 1 && clap == 1) {
+    for (int a = 0; a < 8; a++) {
+      sequencer_clap[a] = 0;
+    }
+  }
+  if (undo == 1 && kick == 1) {
+    for (int a = 0; a < 8; a++) {
+      sequencer_kick[a] = 0;
+    }
+  }
+  if (undo == 1 && snare == 1) {
+    for (int a = 0; a < 8; a++) {
+      sequencer_snare[a] = 0;
+    }
+  }
+  if (undo == 1 && hihat == 1) {
+    for (int a = 0; a < 8; a++) {
+      sequencer_hihat[a] = 0;
+    }
+  }
+
+
+  delayMicroseconds(map(artboard.pot(0), 0, 1023, 180000, 120000));
+
 }
