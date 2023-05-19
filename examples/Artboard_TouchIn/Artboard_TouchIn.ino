@@ -2,7 +2,7 @@
   /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: touchin exemple
+Titolo progetto: touchin 
 Descrizione: funzionamento libreria touch
 
 
@@ -35,7 +35,7 @@ void loop(){
   for( int i=0; i<12; i++){ // leggiamo e stampiamo sulla seriale tutti i valori
       int val = artboard.touch(i);
       Serial.print("pos: ");
-      Serial.print(i);
+      Serial.print(i+1);
       Serial.print(": ");
      Serial.print(val);
        Serial.print(" ");
