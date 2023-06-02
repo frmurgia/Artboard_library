@@ -39,16 +39,11 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 
 • 1 ESP-12S
 
+## To use this library:
 
+#include <Artboard.h> 
 
-
-
-##   **library**
-
-constructor artboard();
-
-
-##   **Function**
+##   **Class**
 
  artboard.touch(0-11);
 
