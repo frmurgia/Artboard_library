@@ -42,6 +42,7 @@ Artboard is a breakout board board for teensy 3.6 made for artists, designers an
 ## To use this library:
 
 #include <Artboard.h> 
+Artboard artboard;
 
 ##   **Class**
 
