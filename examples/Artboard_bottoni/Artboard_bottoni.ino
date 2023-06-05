@@ -6,12 +6,9 @@ Titolo progetto: bottoni
 Descrizione: funzionamento libreria: bottoni
 
 
-artboard.button(i) per leggere lo stato dei bottoni è sufficente
-chiamarela funzione button all'interno della libreria artboard
-dove i equivale alla posizione del bottone.
+chiamarela artboard.button(i) per leggere lo stato dei bottoni 
 
-la funzione button restituisce un valore digitale.
-
+la funzione artboard.button(i) restituisce un valore digitale.
 
 by Daniele Murgia © 2019-20 MIT License
       sgtmurgia@gmail.com
@@ -21,7 +18,7 @@ by Daniele Murgia © 2019-20 MIT License
 */
 #include <Artboard.h>  // includiamo la libreria
 
-Artboard artboard;  // Istanza
+Artboard artboard;  // 
 
 void setup() {
   Serial.begin(9600);
@@ -29,14 +26,10 @@ void setup() {
 
 
 void loop() {
-  for (int i = 0; i < 8; i++) {  // leggiamo e stampiamo sul monitor seriale tutti i valori dei bottoni
-    int val = artboard.button(i);
-    Serial.print("pos: ");
-    Serial.print(i+1);
-    Serial.print(": ");
-    Serial.print(val);
-    Serial.print(" ");
-  }
+  // leggiamo e stampiamo sul monitor seriale tutti i valori dei bottoni
+    int bottone1 = artboard.button(0); // variabile
+    Serial.println(bottone1); //stampa su monitor serial
+
   delay(100);
-  Serial.println();
+  
 }

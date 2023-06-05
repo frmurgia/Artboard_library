@@ -5,10 +5,7 @@
 Titolo progetto: potenziometri
 Descrizione: funzionamento libreria potenziometri
 
-
-artboard.button(i) per leggere lo stato dei potenziometri è sufficente
-chiamarela funzione pot all'interno della libreria artboard
-dove i equivale alla posizione del potenziometro.
+chiamare artboard.pot(i) per leggere lo stato dei potenziometri
 
 la funzione potenziomentro restituisce un valore analogico.
 
@@ -30,13 +27,6 @@ void setup() {
 
 
 void loop() {
-  for (int i = 0; i < 8; i++) {  // leggiamo e stampiamo sulla seriale tutti i valori
-    int val = artboard.pot(i);
-    Serial.print("pos: ");
-    Serial.print(i+1);
-    Serial.print(": ");
-    Serial.print(val);
-    Serial.print(" ");
-  }
-  Serial.println();
+    int pot1 = artboard.pot(0);
+    Serial.println(pot1);
 }
