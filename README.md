@@ -1,55 +1,186 @@
+# Artboard Library
 
-#   **Artboard**
-##   **prototyping board for artist**
+Una libreria Arduino per Artboard, una breakout board progettata per Teensy 3.6, pensata per artisti, designer e musicisti.
 
+![Artboard](img/artboard.jpg)
 
+## Panoramica
 
-Artboard is a breakout board board for teensy 3.6 made for artists, designers and musicians.
+Artboard è una scheda di espansione versatile che estende le capacità del Teensy 3.6, fornendo un'interfaccia ricca di sensori e controlli ideale per installazioni artistiche, progetti musicali interattivi e applicazioni creative.
 
+## Caratteristiche Principali
 
+### Input e Controlli
+- **12 ingressi capacitivi** - Per interfacce touch sensibili
+- **8 potenziometri** - Controllo analogico preciso
+- **8 pulsanti standard** - Input digitali robusti
+- **8 pulsanti tattili** - Interfaccia compatta e responsive
+- **1 interruttore on/off** - Controllo alimentazione
 
-*main features:*
+### Connettività
+- **12 pin esterni in/out** - Espandibilità per sensori e attuatori esterni
+- **12 pin digital/analog/PWM** - Massima versatilità di utilizzo
+- **Connessione WiFi (ESP12S)** - Comunicazione wireless integrata
 
+### Audio
+- **Footprint per Teensy Audio Shield** - Compatibilità con lo shield audio ufficiale
+- **Uscita audio stereo** - Audio professionale
+- **Ingresso audio stereo** - Acquisizione audio di qualità
 
-• 12 capacitive inputs
+### Feedback Visivo
+- **1 LED RGB** - Feedback multicolore
+- **8 LED RGB digitali** - Display e segnalazione avanzata
 
-• 8 potentiometers
+### Processore
+- **ESP-12S integrato** - Capacità di elaborazione e connettività aggiuntive
 
-• 8 Buttons
+## Installazione
 
-• 12 external in/out
+### Requisiti
+- Arduino IDE
+- Teensyduino installato
+- Teensy 3.6
 
-• 8 tactile button
+### Installazione della Libreria
 
-• 1 switch on/off
+1. Scarica o clona questo repository
+2. Copia la cartella `Artboard_library` nella directory delle librerie di Arduino:
+   - **Windows**: `Documents/Arduino/libraries/`
+   - **Mac**: `~/Documents/Arduino/libraries/`
+   - **Linux**: `~/Arduino/libraries/`
+3. Riavvia Arduino IDE
 
-• teensy audio shield footprints
+Oppure installa tramite Arduino IDE:
+1. Vai su `Sketch` → `Include Library` → `Add .ZIP Library...`
+2. Seleziona il file ZIP scaricato
 
-• wifi connection (ESP12S)
+## Utilizzo Base
 
-• 1 led RGB
+### Inclusione della Libreria
 
-• 12 in/out digital/analog/pwm
+```cpp
+#include <Artboard.h>
 
-• stereo audio output
-
-• stereo audio input
-
-• 8 diglta rgb led
-
-• 1 ESP-12S
-
-## To use this library:
-
-#include <Artboard.h> 
 Artboard artboard;
+```
 
-##   **Class**
+### Lettura degli Input
 
- artboard.touch(0-11);
+```cpp
+void setup() {
+  Serial.begin(9600);
+}
 
- artboard.button(0-7);
+void loop() {
+  // Lettura input capacitivi (0-11)
+  int touchValue = artboard.touch(0);
+  
+  // Lettura pulsanti (0-7)
+  int buttonState = artboard.button(0);
+  
+  // Lettura potenziometri (0-7)
+  int potValue = artboard.pot(0);
+  
+  Serial.println(touchValue);
+  delay(10);
+}
+```
 
- artboard.pot(0-7);
+## Esempi
 
+La libreria include diversi esempi per iniziare rapidamente:
 
+- **BasicInputs**: Lettura di tutti i tipi di input
+- **LEDControl**: Controllo dei LED RGB
+- **AudioProcessing**: Elaborazione audio con l'audio shield
+- **WiFiCommunication**: Comunicazione wireless con ESP12S
+- **InteractiveInstallation**: Esempio completo per installazione interattiva
+
+Per accedere agli esempi: `File` → `Examples` → `Artboard`
+
+## API Reference
+
+### Input Capacitivi
+```cpp
+artboard.touch(pin)  // pin: 0-11, ritorna valore capacitivo
+```
+
+### Pulsanti
+```cpp
+artboard.button(pin)  // pin: 0-7, ritorna HIGH o LOW
+```
+
+### Potenziometri
+```cpp
+artboard.pot(pin)  // pin: 0-7, ritorna valore 0-1023
+```
+
+### LED RGB
+```cpp
+artboard.setRGB(r, g, b)  // Imposta colore LED RGB principale
+artboard.setLED(index, r, g, b)  // Imposta LED digitale specifico (0-7)
+```
+
+### Pin Digitali/Analogici
+```cpp
+artboard.pinMode(pin, mode)  // Configura modalità pin (0-11)
+artboard.digitalWrite(pin, value)  // Scrittura digitale
+artboard.digitalRead(pin)  // Lettura digitale
+artboard.analogRead(pin)  // Lettura analogica
+```
+
+## Specifiche Hardware
+
+- **Microcontrollore**: Teensy 3.6
+- **Tensione operativa**: 3.3V
+- **Alimentazione**: USB o alimentazione esterna (5-12V)
+- **Dimensioni**: [specificare dimensioni]
+- **Connettori**: Header standard 2.54mm
+
+## Pinout
+
+Per il pinout dettagliato e lo schema elettrico, consultare la cartella `img/` del repository.
+
+## Progetti di Esempio
+
+Artboard è perfetto per:
+- Installazioni artistiche interattive
+- Strumenti musicali digitali
+- Controller MIDI personalizzati
+- Interfacce sensoriali per performance live
+- Progetti di physical computing creativi
+- Prototipazione rapida di interfacce
+
+## Contribuire
+
+Contributi, segnalazioni di bug e richieste di funzionalità sono benvenuti!
+
+1. Fai un Fork del progetto
+2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit delle tue modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Apri una Pull Request
+
+## Licenza
+
+[Specificare la licenza]
+
+## Crediti
+
+Progetto e sviluppo: [Nome autore/team]
+
+## Supporto
+
+Per domande, problemi o suggerimenti:
+- Apri un [Issue](https://github.com/frmurgia/Artboard_library/issues) su GitHub
+- [Contatti aggiuntivi se disponibili]
+
+## Risorse Aggiuntive
+
+- [Teensy 3.6 Documentation](https://www.pjrc.com/store/teensy36.html)
+- [Teensy Audio Library](https://www.pjrc.com/teensy/td_libs_Audio.html)
+- [ESP12S Documentation](https://www.espressif.com/en/products/modules/esp8266)
+
+---
+
+**Made with ❤️ for artists, designers and musicians**
