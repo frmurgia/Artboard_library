@@ -172,7 +172,6 @@ Progetto e sviluppo: Daniele Murgia
 
 Per domande, problemi o suggerimenti:
 - Apri un [Issue](https://github.com/frmurgia/Artboard_library/issues) su GitHub
-- [Contatti aggiuntivi se disponibili]
 
 ## Risorse Aggiuntive
 
