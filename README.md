@@ -162,11 +162,11 @@ Contributi, segnalazioni di bug e richieste di funzionalità sono benvenuti!
 
 ## Licenza
 
-[Specificare la licenza]
+MIT
 
 ## Crediti
 
-Progetto e sviluppo: [Nome autore/team]
+Progetto e sviluppo: Daniele Murgia
 
 ## Supporto
 
