@@ -2,7 +2,7 @@
 
 Una libreria Arduino per Artboard, una breakout board progettata per Teensy 3.6, pensata per artisti, designer e musicisti.
 
-![Artboard](img/artboard.jpg)
+![Artboard](https://github.com/frmurgia/Artboard_library/blob/master/img/Screenshot%202025-11-06%20alle%2012.03.42.png)
 
 ## Panoramica
 
