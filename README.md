@@ -7,6 +7,8 @@ Una libreria Arduino per Artboard, una breakout board progettata per Teensy 3.6,
 ## Panoramica
 
 Artboard è una scheda di espansione versatile che estende le capacità del Teensy 3.6, fornendo un'interfaccia ricca di sensori e controlli ideale per installazioni artistiche, progetti musicali interattivi e applicazioni creative.
+
+
 [Pinouts](https://github.com/frmurgia/Artboard_library/blob/master/img/pinout%20wireframe.png).
 
 ## Caratteristiche Principali
