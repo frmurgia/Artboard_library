@@ -11,28 +11,27 @@ Artboard è una scheda di espansione versatile che estende le capacità del Teen
 ## Caratteristiche Principali
 
 ### Input e Controlli
-- **12 ingressi capacitivi** - Per interfacce touch sensibili
-- **8 potenziometri** - Controllo analogico preciso
-- **8 pulsanti standard** - Input digitali robusti
-- **8 pulsanti tattili** - Interfaccia compatta e responsive
-- **1 interruttore on/off** - Controllo alimentazione
+- **12 ingressi capacitivi**
+- **8 potenziometri** 
+- **8 pulsanti standard** 
+- **8 pulsanti tattili** 
+- **1 interruttore on/off** 
 
 ### Connettività
-- **12 pin esterni in/out** - Espandibilità per sensori e attuatori esterni
-- **12 pin digital/analog/PWM** - Massima versatilità di utilizzo
-- **Connessione WiFi (ESP12S)** - Comunicazione wireless integrata
+- **12 pin esterni in/out**
+- **12 pin digital/analog/PWM**
+- **Connessione WiFi (ESP12S)** - Comunicazione wireless 
 
 ### Audio
 - **Footprint per Teensy Audio Shield** - Compatibilità con lo shield audio ufficiale
-- **Uscita audio stereo** - Audio professionale
-- **Ingresso audio stereo** - Acquisizione audio di qualità
+- **Uscita audio stereo** 
+- **Ingresso audio stereo** 
 
 ### Feedback Visivo
-- **1 LED RGB** - Feedback multicolore
-- **8 LED RGB digitali** - Display e segnalazione avanzata
+- **8 LED RGB digitali** -
 
 ### Processore
-- **ESP-12S integrato** - Capacità di elaborazione e connettività aggiuntive
+- **ESP-12S integrato** 
 
 ## Installazione
 
