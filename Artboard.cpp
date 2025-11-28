@@ -15,7 +15,8 @@ const int POT_PINS[8] = {31, 32, 33, 34, 35, 36, 37, 38};
 **/
 Artboard::Artboard() {
 	_isInitialized = false; // Sarà impostato a true da initialize()
-	signalPin = -1; 
+	_ledsInitialized = false; // Sarà impostato a true da initLEDs()
+	signalPin = -1;
 	enablePin = -1;
 	currentChannel = -1;
 	currentChannelB = -1;
@@ -191,6 +192,95 @@ void Artboard::setButtonChannel(int channel){
         // AGGIUNGI QUESTA RIGA:
         // Dà al MUX il tempo di stabilizzarsi prima della lettura.
         // 1 microsecondo (1000ns) è un'eternità per un MUX da 50ns.
-        delayMicroseconds(1); 
+        delayMicroseconds(1);
 	}
+}
+
+
+// --- LED FUNCTIONS ---
+
+/**
+* @public
+* Inizializza i LED
+*/
+void Artboard::initLEDs() {
+	if (_ledsInitialized) return; // Già inizializzato
+
+	FastLED.addLeds<LED_TYPE, LED_DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+	FastLED.setBrightness(128); // Luminosità media di default
+	FastLED.clear();
+	FastLED.show();
+
+	_ledsInitialized = true;
+}
+
+/**
+* @public
+* Imposta il colore di un LED specifico
+*/
+void Artboard::setLED(uint8_t index, uint8_t r, uint8_t g, uint8_t b) {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	if (index >= NUM_LEDS) return; // Indice non valido
+
+	leds[index] = CRGB(r, g, b);
+	FastLED.show();
+}
+
+/**
+* @public
+* Imposta il colore di tutti i LED
+*/
+void Artboard::setAllLEDs(uint8_t r, uint8_t g, uint8_t b) {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	for (int i = 0; i < NUM_LEDS; i++) {
+		leds[i] = CRGB(r, g, b);
+	}
+	FastLED.show();
+}
+
+/**
+* @public
+* Spegne un LED specifico
+*/
+void Artboard::clearLED(uint8_t index) {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	if (index >= NUM_LEDS) return; // Indice non valido
+
+	leds[index] = CRGB(0, 0, 0);
+	FastLED.show();
+}
+
+/**
+* @public
+* Spegne tutti i LED
+*/
+void Artboard::clearAllLEDs() {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	FastLED.clear();
+	FastLED.show();
+}
+
+/**
+* @public
+* Aggiorna i LED
+*/
+void Artboard::updateLEDs() {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	FastLED.show();
+}
+
+/**
+* @public
+* Imposta la luminosità globale
+*/
+void Artboard::setBrightness(uint8_t brightness) {
+	if (!_ledsInitialized) initLEDs(); // Init automatico
+
+	FastLED.setBrightness(brightness);
+	FastLED.show();
 }
