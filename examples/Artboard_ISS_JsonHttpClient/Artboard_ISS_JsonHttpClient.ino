@@ -14,8 +14,8 @@
 */
 
 #include "libraries.h"
-char ssid[] = "P10";  // your network SSID (name)
-char pass[] = "$Murgia1";
+char ssid[] = "BRAMBRI";  // your network SSID (name)
+char pass[] = "CASAGALLO2872018";
 int status = WL_IDLE_STATUS;  // the Wifi radio's status
 WiFiEspClient client;
 
