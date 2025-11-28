@@ -86,13 +86,28 @@ void loop() {
 
 La libreria include diversi esempi per iniziare rapidamente:
 
-- **BasicInputs**: Lettura di tutti i tipi di input
-- **LEDControl**: Controllo dei LED RGB
-- **AudioProcessing**: Elaborazione audio con l'audio shield
-- **WiFiCommunication**: Comunicazione wireless con ESP12S
-- **InteractiveInstallation**: Esempio completo per installazione interattiva
+### Debug e Test
+- **debug/Artboard_bottoni**: Test dei pulsanti della board
+- **debug/Artboard_TouchIn**: Test degli input capacitivi
+- **debug/Artboard_potenziometri**: Test dei potenziometri
+- **debug/debug_sistema**: Test completo del sistema
 
-Per accedere agli esempi: `File` → `Examples` → `Artboard`
+### Audio
+- **Artboard_PlayAudioFromSD**: Riproduzione di campioni audio da SD card
+- **audio/workshop**: Serie completa di esempi per sintesi audio e processing (w1-w11)
+  - Sintesi sonora base, inviluppi, filtri, delay, LFO e altro
+
+### Connettività Web
+- **Artboard_ISS_JsonHttpClient**: Comunicazione WiFi e parsing JSON (tracciamento ISS)
+- **Artboard_Wikipedia_Sonification**: Sonorizzazione in tempo reale dei contributi Wikipedia (stile "Listen to Wikipedia")
+
+### P5.js Integration
+- **p5/artboard_to_p5**: Inviare dati da Artboard a sketch p5.js via Web Serial
+- **p5/p5_to_artboard**: Controllare Artboard da browser con p5.js
+- **p5/p5_to_servo**: Controllo servomotori via p5.js
+- **p5/artboard_generative_graphics**: Grafiche generative minimaliste (stile Sol LeWitt)
+
+Per accedere agli esempi: `File` → `Examples` → `Artboard` o nella cartella `examples/` del repository
 
 ## API Reference
 
