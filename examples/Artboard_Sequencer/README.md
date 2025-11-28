@@ -23,9 +23,10 @@ Questo progetto trasforma Artboard in un potente sequencer musicale step-based, 
 ## Hardware Richiesto
 
 - **Artboard** con Teensy 3.6
-- **Teensy Audio Shield** (per l'uscita audio)
-- Altoparlanti o cuffie
+- Altoparlanti o cuffie collegati al DAC (pin A21/A22 su Teensy 3.6)
 - Switch/Interruttore collegato al pin 28 (per Play/Stop)
+
+**Nota**: Questo esempio usa `AudioOutputAnalog` (DAC interno) invece di `AudioOutputI2S`, quindi **NON richiede** il Teensy Audio Shield. Collega le cuffie/altoparlanti direttamente all'uscita DAC del Teensy.
 
 ## Controlli
 
@@ -105,22 +106,24 @@ Durante la registrazione o il playback, regola i potenziometri per:
 
 ## Configurazione Audio
 
-Il progetto utilizza la Teensy Audio Library con:
+Il progetto utilizza la Teensy Audio Library con architettura provata:
 
-- **24 Oscillatori** (2 per ogni nota)
-- **12 Envelope Generator** (uno per nota)
+- **24 Oscillatori** (2 per ogni nota - waveform1 e waveform2)
+- **12 Envelope Generator** (AudioSynthWaveformDc - uno per nota)
+- **24 Multiply** (applicano l'envelope agli oscillatori)
 - **12 Note Mixer** (combina i 2 oscillatori per nota)
 - **3 Main Mixer** (raggruppano le 12 note)
-- **1 LFO** (modulazione)
-- **1 State Variable Filter** (filtraggio)
-- **I2S Audio Output** (uscita stereo)
+- **1 Final Mixer** (combina i main mixer)
+- **1 LFO** (AudioSynthWaveformSine - modulazione)
+- **1 State Variable Filter** (filtraggio con LFO)
+- **DAC Audio Output** (AudioOutputAnalog - uscita mono su pin A21)
 
 ### Limiti di Memoria
 
-Teensy 3.6 ha limiti sul numero di oggetti audio e connessioni. Il progetto usa circa 60-70 AudioConnection. Se modifichi il codice e aggiungi altri oggetti, potresti dover:
-- Aumentare `AudioMemory()` nel setup
-- Ridurre il numero di note polifoniche
-- Ottimizzare le connessioni audio
+Teensy 3.6 ha limiti sul numero di oggetti audio e connessioni. Il progetto usa 91 AudioConnection (vicino al limite di ~100-120). Se modifichi il codice:
+- `AudioMemory(120)` è già impostato - sufficiente per questo progetto
+- Se aggiungi funzionalità, potresti dover ridurre il numero di note polifoniche
+- L'architettura attuale usa AudioSynthWaveformDc per gli envelope invece di AudioEffectEnvelope per risparmiare oggetti
 
 ## Consigli e Trucchi
 
@@ -183,8 +186,10 @@ if (currentStep % 2 == 1) {
 ## Troubleshooting
 
 ### Nessun suono
-- Verifica che il Teensy Audio Shield sia collegato correttamente
-- Controlla `AudioMemory()` - aumenta se necessario
+- Verifica che le cuffie/altoparlanti siano collegati al DAC (pin A21 su Teensy 3.6)
+- Il DAC usa output analogico mono - collega GND e A21
+- Aumenta il volume - il DAC potrebbe avere uscita più bassa dell'I2S
+- Controlla che `AudioMemory(120)` sia sufficiente
 - Verifica le connessioni audio nel codice
 
 ### Crash o comportamento strano
