@@ -1,7 +1,7 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio Workshop 3 - Inviluppo
+Titolo progetto: Audio 3 - Inviluppo
 Descrizione: Usiamo un inviluppo per controllare il volume nel tempo.
              Creiamo un "VCA" (Voltage Controlled Amplifier)
              moltiplicando la sinusoide per un segnale di controllo (l'inviluppo).

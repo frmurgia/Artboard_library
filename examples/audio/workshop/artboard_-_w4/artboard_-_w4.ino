@@ -1,7 +1,7 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio Workshop 4 - synth polifonico
+Titolo progetto: Audio 4 - synth polifonico
 Descrizione:   La versione più semplice di un synth.
 
                

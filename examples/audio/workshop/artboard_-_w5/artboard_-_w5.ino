@@ -1,8 +1,8 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio Workshop 5 - Ottave e Forme d'Onda
-Descrizione:   Partiamo dal nostro Polysynth (Sketch 4) e lo miglioriamo.
+Titolo progetto: Audio 5 - Ottave e Forme d'Onda
+Descrizione:   Partiamo dal nostro synth  e lo miglioriamo.
                Usiamo i bottoni 0 e 1 per cambiare il "timbro"
                (forma d'onda) e l'"altezza" (ottava) di tutte le 12 voci.
 

@@ -1,7 +1,7 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio Workshop 1 - La Prima Sinusoide
+Titolo progetto: Audio 1 - La Prima Sinusoide
 Descrizione: "Hello, World!" dell'audio.
              Questo sketch genera un'onda sinusoidale pura (un fischio)
              alla frequenza di 440Hz (la nota "La").

@@ -1,7 +1,7 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio Workshop 2 - Controllo Frequenza
+Titolo progetto: Audio 2 - Controllo Frequenza
 Descrizione: Generiamo un'onda sinusoidale e usiamo
              il potenziometro 0 per controllare la sua frequenza (pitch).
              
