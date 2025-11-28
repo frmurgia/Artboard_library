@@ -44,11 +44,13 @@ Libreria Arduino per breakout board Teensy 3.6.
    - **Windows**: `Documents/Arduino/libraries/`
    - **Mac**: `~/Documents/Arduino/libraries/`
    - **Linux**: `~/Arduino/libraries/`
-3. Riavvia Arduino IDE
+3. Installa la libreria **FastLED** tramite Library Manager (per il supporto LED RGB)
+4. Riavvia Arduino IDE
 
 Oppure installa tramite Arduino IDE:
 1. Vai su `Sketch` → `Include Library` → `Add .ZIP Library...`
 2. Seleziona il file ZIP scaricato
+3. Installa la libreria **FastLED** tramite Library Manager
 
 ## Utilizzo Base
 
@@ -94,6 +96,7 @@ La libreria include diversi esempi per iniziare rapidamente:
 
 ### Audio
 - **Artboard_PlayAudioFromSD**: Riproduzione di campioni audio da SD card
+- **Artboard_Sequencer**: Sequencer musicale a 8 step con sintetizzatore polifonico a 12 note
 - **audio/workshop**: Serie completa di esempi per sintesi audio e processing (w1-w11)
   - Sintesi sonora base, inviluppi, filtri, delay, LFO e altro
 
@@ -128,9 +131,15 @@ artboard.pot(pin)  // pin: 0-7, ritorna valore 0-1023
 
 ### LED RGB
 ```cpp
-artboard.setRGB(r, g, b)  // Imposta colore LED RGB principale
-artboard.setLED(index, r, g, b)  // Imposta LED digitale specifico (0-7)
+artboard.setLED(index, r, g, b)  // Imposta LED specifico (0-7)
+artboard.setAllLEDs(r, g, b)     // Imposta tutti i LED
+artboard.clearLED(index)         // Spegne LED specifico
+artboard.clearAllLEDs()          // Spegne tutti i LED
+artboard.setBrightness(value)    // Imposta luminosità (0-255)
+artboard.updateLEDs()            // Aggiorna i LED manualmente
 ```
+
+**Nota**: I LED usano la libreria FastLED e sono collegati al pin 8. Assicurati di avere FastLED installata.
 
 ### Pin Digitali/Analogici
 ```cpp

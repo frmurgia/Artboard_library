@@ -213,8 +213,8 @@ void triggerEvent() {
   waveform1.amplitude(0.5);
   envelope1.noteOn();
 
-  // Set LED color
-  artboard.setRGB(r, g, b);
+  // Set all LED color
+  artboard.setAllLEDs(r, g, b);
 
   // Print to serial
   Serial.print("Event: ");
