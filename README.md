@@ -22,10 +22,9 @@ Libreria Arduino per breakout board Teensy 3.6.
 ### Audio
 - **Footprint per Teensy Audio Shield** - Compatibilità con lo shield audio ufficiale
 - **Uscita audio stereo** 
-- **Ingresso audio stereo** 
 
 ### Feedback Visivo
-- **8 LED RGB digitali** -
+- **8 LED RGB digitali** 
 
 ### Processore
 - **ESP-12S integrato** 
