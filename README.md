@@ -181,5 +181,3 @@ Per domande, problemi o suggerimenti:
 - [ESP12S Documentation](https://www.espressif.com/en/products/modules/esp8266)
 
 ---
-
-**Made with ❤️ for artists, designers and musicians**
