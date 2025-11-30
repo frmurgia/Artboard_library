@@ -100,16 +100,6 @@ La libreria include diversi esempi per iniziare rapidamente:
 - **audio/workshop**: Serie completa di esempi per sintesi audio e processing (w1-w11)
   - Sintesi sonora base, inviluppi, filtri, delay, LFO e altro
 
-### Connettività Web
-- **Artboard_ISS_JsonHttpClient**: Comunicazione WiFi e parsing JSON (tracciamento ISS)
-- **Artboard_Wikipedia_Sonification**: Sonorizzazione in tempo reale dei contributi Wikipedia (stile "Listen to Wikipedia")
-
-### P5.js Integration
-- **p5/artboard_to_p5**: Inviare dati da Artboard a sketch p5.js via Web Serial
-- **p5/p5_to_artboard**: Controllare Artboard da browser con p5.js
-- **p5/p5_to_servo**: Controllo servomotori via p5.js
-- **p5/artboard_generative_graphics**: Grafiche generative minimaliste (stile Sol LeWitt)
-
 Per accedere agli esempi: `File` → `Examples` → `Artboard` o nella cartella `examples/` del repository
 
 ## API Reference
@@ -153,7 +143,7 @@ artboard.analogRead(pin)  // Lettura analogica
 
 - **Microcontrollore**: Teensy 3.6
 - **Tensione operativa**: 3.3V
-- **Alimentazione**: USB o alimentazione esterna (5-12V)
+- **Alimentazione**: USB 
 - **Dimensioni**: [specificare dimensioni]
 - **Connettori**: Header standard 2.54mm
 
@@ -161,15 +151,6 @@ artboard.analogRead(pin)  // Lettura analogica
 
 Per il [Pinouts](https://github.com/frmurgia/Artboard_library/blob/master/img/pinout%20wireframe.png) dettagliato e lo schema elettrico, consultare la cartella `img/` del repository.
 
-## Progetti di Esempio
-
-Artboard è perfetto per:
-- Installazioni artistiche interattive
-- Strumenti musicali digitali
-- Controller MIDI personalizzati
-- Interfacce sensoriali per performance live
-- Progetti di physical computing creativi
-- Prototipazione rapida di interfacce
 
 ## Contribuire
 
