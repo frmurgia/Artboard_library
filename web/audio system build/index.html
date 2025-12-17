@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio System Builder</title>
+    <style>
+        @font-face {
+            font-family: 'Aktiv Grotesk';
+            src: url('https://use.typekit.net/af/2555e1/00000000000000007735a1c3/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff2'),
+                 url('https://use.typekit.net/af/2555e1/00000000000000007735a1c3/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Aktiv Grotesk';
+            src: url('https://use.typekit.net/af/45bc57/00000000000000007735a1c7/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3') format('woff2'),
+                 url('https://use.typekit.net/af/45bc57/00000000000000007735a1c7/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3') format('woff');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Aktiv Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 400;
+            background: #ffffff;
+            color: #000;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #f5f5f5;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+        }
+
+        .module-category {
+            margin-bottom: 25px;
+        }
+
+        .module-category h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .module-item {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+
+        .module-item:hover {
+            background: #fafafa;
+            border-color: var(--module-color);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .module-item h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+            font-weight: 400;
+            color: #000;
+        }
+
+        .module-item p {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .module-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        /* Canvas */
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Modules on canvas */
+        .canvas-module {
+            position: absolute;
+            background: #ffffff;
+            border: 2px solid;
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 180px;
+            cursor: move;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .canvas-module:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .canvas-module.selected {
+            border-width: 3px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .canvas-module.dragging {
+            opacity: 0.8;
+            cursor: grabbing;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .module-title {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+        }
+
+        .module-delete {
+            background: rgba(255, 80, 80, 0.1);
+            border: none;
+            color: #ff5050;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .module-delete:hover {
+            background: rgba(255, 80, 80, 0.2);
+        }
+
+        .module-ports {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .port {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .port:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .port.input {
+            background: #4ecdc4;
+        }
+
+        .port.output {
+            background: #ff6b6b;
+        }
+
+        .port-label {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 5px;
+            color: #666;
+        }
+
+        /* Connections */
+        svg.connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .connection-line:hover {
+            stroke-width: 5;
+            opacity: 1;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .toolbar button {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .toolbar button:hover {
+            background: #fafafa;
+            border-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Module colors */
+        .color-output { --module-color: #ff6b6b; border-color: #ff6b6b; }
+        .color-playback { --module-color: #5f27cd; border-color: #5f27cd; }
+        .color-record { --module-color: #ee5a6f; border-color: #ee5a6f; }
+        .color-synthesis { --module-color: #feca57; border-color: #feca57; }
+        .color-effects { --module-color: #fd79a8; border-color: #fd79a8; }
+        .color-filters { --module-color: #a29bfe; border-color: #a29bfe; }
+        .color-mixers { --module-color: #00b894; border-color: #00b894; }
+        .color-analysis { --module-color: #e17055; border-color: #e17055; }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .port.active {
+            animation: pulse 1s infinite;
+            transform: scale(1.4);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* Temporary connection line */
+        .temp-connection {
+            stroke-width: 3;
+            stroke-dasharray: 8, 4;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.6;
+            animation: dash 0.5s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -12;
+            }
+        }
+
+        /* Connection success animation */
+        @keyframes connectionSuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        .port.success {
+            animation: connectionSuccess 0.4s ease-out;
+        }
+
+        /* Invalid connection feedback */
+        .port.invalid {
+            animation: shake 0.4s ease-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #00b894;
+        }
+
+        .toast.error {
+            background: #ff6b6b;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 400px;
+            max-height: 500px;
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .info-panel.hidden {
+            transform: translateY(600px);
+            opacity: 0;
+        }
+
+        .info-panel h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .info-panel .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            color: #666;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .info-panel .close-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section {
+            margin-bottom: 15px;
+        }
+
+        .info-section h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .info-section p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .info-section code {
+            background: #f5f5f5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #d63384;
+        }
+
+        .info-section ul {
+            list-style-position: inside;
+            padding-left: 10px;
+        }
+
+        .info-section li {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .waveform-example {
+            background: #f8f9fa;
+            border-left: 4px solid #feca57;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .waveform-example code {
+            display: block;
+            margin: 5px 0;
+            background: #fff;
+            padding: 8px;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2>🎛️ Audio Modules</h2>
+            
+            <div class="module-category">
+                <h3>Output</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioOutputAnalog" data-color="output">
+                    <h4><span class="module-color-dot" style="background: #ff6b6b;"></span>DAC Output</h4>
+                    <p>DAC mono integrato</p>
+                </div>
+            </div>
+
+            <div class="module-category">
+                <h3>Playback</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioPlaySdWav" data-color="playback">
+                    <h4><span class="module-color-dot" style="background: #5f27cd;"></span>Play SD WAV</h4>
+                    <p>Riproduci WAV da SD</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioPlayMemory" data-color="playback">
+                    <h4><span class="module-color-dot" style="background: #5f27cd;"></span>Play Memory</h4>
+                    <p>Suoni in memoria</p>
+                </div>
+            </div>
+
+            <!-- <div class="module-category">
+                <h3>Record</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioRecordQueue" data-color="record">
+                    <h4><span class="module-color-dot" style="background: #ee5a6f;"></span>Record Queue</h4>
+                    <p>Registra in buffer</p>
+                </div>
+            </div> -->
+
+            <div class="module-category">
+                <h3>Synthesis</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioSynthWaveformSine" data-color="synthesis">
+                    <h4><span class="module-color-dot" style="background: #feca57;"></span>Sine Wave</h4>
+                    <p>Oscillatore sinusoidale</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioSynthWaveform" data-color="synthesis">
+                    <h4><span class="module-color-dot" style="background: #feca57;"></span>Waveform</h4>
+                    <p>Forme d'onda multiple</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioSynthNoisePink" data-color="synthesis">
+                    <h4><span class="module-color-dot" style="background: #feca57;"></span>Pink Noise</h4>
+                    <p>Rumore rosa</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioSynthNoiseWhite" data-color="synthesis">
+                    <h4><span class="module-color-dot" style="background: #feca57;"></span>White Noise</h4>
+                    <p>Rumore bianco</p>
+                </div>
+            </div>
+
+            <div class="module-category">
+                <h3>Effects</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioEffectDelay" data-color="effects">
+                    <h4><span class="module-color-dot" style="background: #fd79a8;"></span>Delay</h4>
+                    <p>Eco/ritardo</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioEffectFreeverb" data-color="effects">
+                    <h4><span class="module-color-dot" style="background: #fd79a8;"></span>Freeverb</h4>
+                    <p>Riverbero mono</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioEffectEnvelope" data-color="effects">
+                    <h4><span class="module-color-dot" style="background: #fd79a8;"></span>Envelope</h4>
+                    <p>ADSR envelope</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioEffectMultiply" data-color="effects">
+                    <h4><span class="module-color-dot" style="background: #fd79a8;"></span>Multiply</h4>
+                    <p>Ring modulator</p>
+                </div>
+            </div>
+
+            <div class="module-category">
+                <h3>Filters</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioFilterStateVariable" data-color="filters">
+                    <h4><span class="module-color-dot" style="background: #a29bfe;"></span>State Variable</h4>
+                    <p>Filtro LP/BP/HP</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioFilterBiquad" data-color="filters">
+                    <h4><span class="module-color-dot" style="background: #a29bfe;"></span>Biquad Filter</h4>
+                    <p>Filtro IIR 2-pole</p>
+                </div>
+            </div>
+
+            <div class="module-category">
+                <h3>Mixers</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioMixer4" data-color="mixers">
+                    <h4><span class="module-color-dot" style="background: #00b894;"></span>Mixer 4</h4>
+                    <p>Mixer 4 canali</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioAmplifier" data-color="mixers">
+                    <h4><span class="module-color-dot" style="background: #00b894;"></span>Amplifier</h4>
+                    <p>Controllo volume</p>
+                </div>
+            </div>
+
+            <div class="module-category">
+                <h3>Analysis</h3>
+                <div class="module-item" draggable="true" data-module-type="AudioAnalyzePeak" data-color="analysis">
+                    <h4><span class="module-color-dot" style="background: #e17055;"></span>Peak</h4>
+                    <p>Ampiezza picco</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioAnalyzeRMS" data-color="analysis">
+                    <h4><span class="module-color-dot" style="background: #e17055;"></span>RMS</h4>
+                    <p>Livello RMS</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioAnalyzeFFT256" data-color="analysis">
+                    <h4><span class="module-color-dot" style="background: #e17055;"></span>FFT 256</h4>
+                    <p>Analisi spettro 256</p>
+                </div>
+                <div class="module-item" draggable="true" data-module-type="AudioAnalyzeFFT1024" data-color="analysis">
+                    <h4><span class="module-color-dot" style="background: #e17055;"></span>FFT 1024</h4>
+                    <p>Analisi spettro 1024</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <svg class="connections"></svg>
+            <div class="canvas" id="canvas"></div>
+            
+            <div class="toolbar">
+                <button onclick="clearCanvas()">🗑️ Cancella</button>
+                <button onclick="exportDesign()">💾 Esporta</button>
+                <button onclick="toggleInfo()">📖 Info</button>
+            </div>
+
+            <div class="info-panel hidden" id="infoPanel">
+                <button class="close-btn" onclick="closeInfo()">×</button>
+                <div id="infoPanelContent">
+                    <h3>💡 Guida</h3>
+                    <div class="info-section">
+                        <h4>Come usare</h4>
+                        <p>Trascina i moduli dalla barra laterale al canvas. Clicca sulle porte per connetterli. Ogni sistema audio deve finire con un modulo DAC Output per produrre suono.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toast" id="toast"></div>
+        </div>
+    </div>
+
+    <script>
+        let modules = [];
+        let connections = [];
+        let moduleIdCounter = 0;
+        let selectedPort = null;
+        let isDragging = false;
+        let currentDragModule = null;
+        let dragOffset = { x: 0, y: 0 };
+        let selectedModule = null;
+
+        // Module configurations - solo moduli essenziali
+        const moduleConfigs = {
+            // Output
+            'AudioOutputAnalog': { title: 'DAC Output', outputs: 0, inputs: 1,
+                description: 'Output analogico tramite DAC integrato di Teensy (A21/DAC0). 12 bit mono output.',
+                functions: ['analogReference()'],
+                example: 'AudioSynthWaveformSine sine1;\nAudioOutputAnalog dac0;\nAudioConnection patchCord1(sine1, 0, dac0, 0);'
+            },
+            
+            // Playback
+            'AudioPlaySdWav': { title: 'SD WAV', outputs: 2, inputs: 0,
+                description: 'Riproduce file WAV da SD card. Supporta stereo 16 bit 44.1 kHz.',
+                functions: ['play("filename.wav")', 'stop()', 'isPlaying()'],
+                example: 'void loop() {\n  if (artboard.button(0)>0) {\n    playSdWav1.play("sound.wav");\n  }\n}'
+            },
+            'AudioPlayMemory': { title: 'Play Mem', outputs: 1, inputs: 0,
+                description: 'Riproduce array di campioni dalla memoria. Usa wav2sketch per convertire.',
+                functions: ['play(array)', 'stop()'],
+                example: 'AudioPlayMemory sound1;\nsound1.play(AudioSampleKick);'
+            },
+            
+            // Record
+            'AudioRecordQueue': { title: 'Record', outputs: 0, inputs: 1,
+                description: 'Registra audio in un buffer circolare. Leggi con readBuffer().',
+                functions: ['begin()', 'available()', 'readBuffer()'],
+                example: 'if (queue1.available() >= 2) {\n  byte buffer[256];\n  memcpy(buffer, queue1.readBuffer(), 256);\n  queue1.freeBuffer();\n}'
+            },
+            
+            // Synthesis
+            'AudioSynthWaveformSine': { title: 'Sine Osc', outputs: 1, inputs: 0,
+                description: 'Oscillatore sinusoidale puro. ',
+                functions: ['frequency(hz)', 'amplitude(0.0-1.0)'],
+                example: 'sine1.frequency(440.0);\nsine1.amplitude(0.5);'
+            },
+            'AudioSynthWaveform': { title: 'Waveform', outputs: 1, inputs: 0,
+                description: 'Oscillatore multi-forma d\'onda. Puoi scegliere tra Sine, Sawtooth, Square e Triangle. Perfetto per sintesi subtrattiva.',
+                functions: ['begin(waveform)', 'begin(amplitude, frequency, waveform)', 'frequency(hz)', 'amplitude(0.0-1.0)', 'pulseWidth(0.0-1.0)'],
+                waveforms: {
+                    'WAVEFORM_SINE': 'Onda sinusoidale pura - suono morbido e pulito',
+                    'WAVEFORM_SAWTOOTH': 'Dente di sega - ricco di armoniche, suono brillante',
+                    'WAVEFORM_SQUARE': 'Onda quadra - suono hollow, armoniche dispari',
+                    'WAVEFORM_TRIANGLE': 'Triangolare - simile a sine ma con armoniche dispari'
+                },
+                example: 'waveform1.begin(WAVEFORM_SAWTOOTH);\nwaveform1.frequency(220);\nwaveform1.amplitude(0.8);\n\n// Cambia forma d\'onda:\nwaveform1.begin(WAVEFORM_SQUARE);\n\n// Square con PWM:\nwaveform1.pulseWidth(0.3);'
+            },
+            'AudioSynthNoisePink': { title: 'Pink Noise', outputs: 1, inputs: 0,
+                description: 'Rumore rosa (1/f). -3dB per ottava. Più naturale del rumore bianco.',
+                functions: ['amplitude(0.0-1.0)'],
+                example: 'pink1.amplitude(0.3);'
+            },
+            'AudioSynthNoiseWhite': { title: 'White Noise', outputs: 1, inputs: 0,
+                description: 'Rumore bianco. Tutte le frequenze con stessa ampiezza.',
+                functions: ['amplitude(0.0-1.0)'],
+                example: 'white1.amplitude(0.3);'
+            },
+            
+            // Effects
+            'AudioEffectDelay': { title: 'Delay', outputs: 8, inputs: 1,
+                description: 'Delay line con 8 tap. Fino a 333ms. Usa memoria interna.',
+                functions: ['delay(channel, milliseconds)'],
+                example: 'delay1.delay(0, 200);  // 200ms sul tap 0\ndelay1.delay(1, 400);  // 400ms sul tap 1'
+            },
+            'AudioEffectFreeverb': { title: 'Freeverb', outputs: 1, inputs: 1,
+                description: 'Algoritmo Freeverb mono. Riverbero di alta qualità.',
+                functions: ['roomsize(0.0-1.0)', 'damping(0.0-1.0)'],
+                example: 'freeverb1.roomsize(0.8);\nfreeverb1.damping(0.5);'
+            },
+            'AudioEffectEnvelope': { title: 'Envelope', outputs: 1, inputs: 1,
+                description: 'Generatore ADSR. Modula ampiezza nel tempo.',
+                functions: ['attack(ms)', 'decay(ms)', 'sustain(level)', 'release(ms)', 'noteOn()', 'noteOff()'],
+                example: 'envelope1.attack(10);\nenvelope1.decay(35);\nenvelope1.sustain(0.5);\nenvelope1.release(300);\nenvelope1.noteOn();'
+            },
+            'AudioEffectMultiply': { title: 'Multiply', outputs: 1, inputs: 2,
+                description: 'Moltiplica due segnali (ring modulation). Crea effetti metallici.',
+                functions: [],
+                example: 'AudioConnection patchCord1(sine1, 0, multiply1, 0);\nAudioConnection patchCord2(sine2, 0, multiply1, 1);'
+            },
+            
+            // Filters
+            'AudioFilterStateVariable': { title: 'State Var', outputs: 3, inputs: 1,
+                description: 'Filtro state variable. 3 output simultanei: lowpass, bandpass, highpass.',
+                functions: ['frequency(hz)', 'resonance(0.7-5.0)', 'octaveControl(octaves)'],
+                example: 'filter1.frequency(1000);\nfilter1.resonance(1.5);\n// Usa output 0=LP, 1=BP, 2=HP'
+            },
+            'AudioFilterBiquad': { title: 'Biquad', outputs: 1, inputs: 1,
+                description: 'Filtro IIR biquad. Configura come lowpass, highpass, bandpass, notch.',
+                functions: ['setLowpass(stage, freq, Q)', 'setHighpass(stage, freq, Q)', 'setBandpass(stage, freq, Q)', 'setNotch(stage, freq, Q)'],
+                example: 'biquad1.setLowpass(0, 800, 0.707);  // Butterworth\nbiquad1.setHighpass(1, 200, 0.707);'
+            },
+            
+            // Mixers
+            'AudioMixer4': { title: 'Mixer 4', outputs: 1, inputs: 4,
+                description: 'Mixer a 4 canali. Controlla gain di ogni canale.',
+                functions: ['gain(channel, level)'],
+                example: 'mixer1.gain(0, 0.5);  // canale 0 a 50%\nmixer1.gain(1, 0.8);  // canale 1 a 80%'
+            },
+            'AudioAmplifier': { title: 'Amplifier', outputs: 1, inputs: 1,
+                description: 'Amplificatore/attenuatore semplice. Controllo volume.',
+                functions: ['gain(level)'],
+                example: 'amp1.gain(0.5);  // 50% volume\namp1.gain(2.0);  // +6dB amplificazione'
+            },
+            
+            // Analysis
+            'AudioAnalyzePeak': { title: 'Peak', outputs: 0, inputs: 1,
+                description: 'Misura ampiezza di picco. Utile per VU meter.',
+                functions: ['available()', 'read()'],
+                example: 'if (peak1.available()) {\n  float val = peak1.read();\n  Serial.println(val);\n}'
+            },
+            'AudioAnalyzeRMS': { title: 'RMS', outputs: 0, inputs: 1,
+                description: 'Calcola RMS (potenza media). Migliore per loudness percepito.',
+                functions: ['available()', 'read()'],
+                example: 'if (rms1.available()) {\n  float level = rms1.read();\n}'
+            },
+            'AudioAnalyzeFFT256': { title: 'FFT 256', outputs: 0, inputs: 1,
+                description: 'FFT a 256 punti. Analisi spettrale veloce.',
+                functions: ['available()', 'read(bin)', 'read(first, last)'],
+                example: 'if (fft256.available()) {\n  for (int i=0; i<128; i++) {\n    float level = fft256.read(i);\n  }\n}'
+            },
+            'AudioAnalyzeFFT1024': { title: 'FFT 1024', outputs: 0, inputs: 1,
+                description: 'FFT a 1024 punti. Maggiore risoluzione in frequenza.',
+                functions: ['available()', 'read(bin)'],
+                example: 'if (fft1024.available()) {\n  float bass = fft1024.read(0, 10);  // 0-430 Hz\n}'
+            }
+        };
+
+        // Show module info with waveform details
+        function showModuleInfo(moduleType) {
+            const info = moduleConfigs[moduleType];
+            if (!info) return;
+
+            const panel = document.getElementById('infoPanel');
+            const content = document.getElementById('infoPanelContent');
+            
+            let functionsHTML = '';
+            if (info.functions && info.functions.length > 0) {
+                functionsHTML = '<div class="info-section"><h4>Funzioni</h4><ul>';
+                info.functions.forEach(fn => {
+                    functionsHTML += `<li><code>${fn}</code></li>`;
+                });
+                functionsHTML += '</ul></div>';
+            }
+
+            let waveformsHTML = '';
+            if (info.waveforms) {
+                waveformsHTML = '<div class="info-section"><h4>Forme d\'onda disponibili</h4>';
+                Object.entries(info.waveforms).forEach(([type, desc]) => {
+                    waveformsHTML += `<div class="waveform-example">
+                        <code>${type}</code>
+                        <p style="margin-top: 5px; font-size: 13px;">${desc}</p>
+                    </div>`;
+                });
+                waveformsHTML += '</div>';
+            }
+
+            let exampleHTML = '';
+            if (info.example) {
+                exampleHTML = `<div class="info-section">
+                    <h4>Esempio</h4>
+                    <div class="waveform-example">
+                        <code style="white-space: pre; font-size: 12px;">${info.example}</code>
+                    </div>
+                </div>`;
+            }
+
+            content.innerHTML = `
+                <h3>${info.title}</h3>
+                <div class="info-section">
+                    <h4>Descrizione</h4>
+                    <p>${info.description}</p>
+                </div>
+                <div class="info-section">
+                    <h4>Porte</h4>
+                    <p>Input: ${info.inputs} | Output: ${info.outputs}</p>
+                </div>
+                ${waveformsHTML}
+                ${functionsHTML}
+                ${exampleHTML}
+            `;
+            
+            panel.classList.remove('hidden');
+        }
+
+        function toggleInfo() {
+            const panel = document.getElementById('infoPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function closeInfo() {
+            document.getElementById('infoPanel').classList.add('hidden');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Drag from sidebar
+        document.querySelectorAll('.module-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('moduleType', item.dataset.moduleType);
+                e.dataTransfer.setData('moduleColor', item.dataset.color);
+            });
+
+            item.addEventListener('click', (e) => {
+                if (!e.target.closest('.canvas-module')) {
+                    showModuleInfo(item.dataset.moduleType);
+                }
+            });
+        });
+
+        const canvas = document.getElementById('canvas');
+        canvas.addEventListener('dragover', (e) => e.preventDefault());
+        canvas.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const moduleType = e.dataTransfer.getData('moduleType');
+            const moduleColor = e.dataTransfer.getData('moduleColor');
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            createModule(moduleType, moduleColor, x, y);
+        });
+
+        function createModule(type, color, x, y) {
+            const config = moduleConfigs[type];
+            if (!config) return;
+            
+            const id = moduleIdCounter++;
+            
+            const module = {
+                id,
+                type,
+                color,
+                x,
+                y,
+                config
+            };
+            
+            modules.push(module);
+            renderModule(module);
+            showToast(`Modulo "${config.title}" aggiunto`, 'success');
+        }
+
+        function renderModule(module) {
+            const div = document.createElement('div');
+            div.className = `canvas-module color-${module.color}`;
+            div.id = `module-${module.id}`;
+            div.style.left = module.x + 'px';
+            div.style.top = module.y + 'px';
+            
+            let portsHTML = '<div class="module-ports">';
+            
+            if (module.config.inputs > 0) {
+                portsHTML += '<div style="display: flex; flex-direction: column; gap: 8px;">';
+                for (let i = 0; i < module.config.inputs; i++) {
+                    portsHTML += `
+                        <div>
+                            <div class="port input" data-module-id="${module.id}" data-port-type="input" data-port-index="${i}"></div>
+                            <div class="port-label">In ${i}</div>
+                        </div>
+                    `;
+                }
+                portsHTML += '</div>';
+            }
+            
+            if (module.config.outputs > 0) {
+                portsHTML += '<div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">';
+                for (let i = 0; i < module.config.outputs; i++) {
+                    portsHTML += `
+                        <div>
+                            <div class="port output" data-module-id="${module.id}" data-port-type="output" data-port-index="${i}"></div>
+                            <div class="port-label">Out ${i}</div>
+                        </div>
+                    `;
+                }
+                portsHTML += '</div>';
+            }
+            
+            portsHTML += '</div>';
+            
+            div.innerHTML = `
+                <div class="module-header">
+                    <div class="module-title">${module.config.title}</div>
+                    <button class="module-delete" onclick="deleteModule(${module.id})">×</button>
+                </div>
+                ${portsHTML}
+            `;
+            
+            canvas.appendChild(div);
+            
+            div.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('port')) return;
+                if (e.target.classList.contains('module-delete')) return;
+                
+                isDragging = true;
+                currentDragModule = module;
+                
+                document.querySelectorAll('.canvas-module').forEach(m => m.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedModule = module;
+                showModuleInfo(module.type);
+                
+                const rect = div.getBoundingClientRect();
+                dragOffset.x = e.clientX - rect.left;
+                dragOffset.y = e.clientY - rect.top;
+                div.classList.add('dragging');
+                e.preventDefault();
+            });
+            
+            div.querySelectorAll('.port').forEach(port => {
+                port.addEventListener('click', handlePortClick);
+                port.addEventListener('mouseenter', (e) => {
+                    if (selectedPort && selectedPort.portType === 'output') {
+                        drawTempConnection(e);
+                    }
+                });
+            });
+        }
+
+        function drawTempConnection(e) {
+            if (!selectedPort) return;
+            
+            const svg = document.querySelector('.connections');
+            const canvasRect = canvas.getBoundingClientRect();
+            
+            const oldTemp = svg.querySelector('.temp-connection');
+            if (oldTemp) oldTemp.remove();
+            
+            const fromModule = modules.find(m => m.id === selectedPort.moduleId);
+            if (!fromModule) return;
+            
+            const fromDiv = document.getElementById(`module-${fromModule.id}`);
+            const fromRect = fromDiv.getBoundingClientRect();
+            
+            const x1 = fromRect.right - canvasRect.left;
+            const y1 = fromRect.top - canvasRect.top + 40 + (selectedPort.portIndex * 30);
+            const x2 = e.clientX - canvasRect.left;
+            const y2 = e.clientY - canvasRect.top;
+            
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const controlPoint = (x1 + x2) / 2;
+            const d = `M ${x1} ${y1} C ${controlPoint} ${y1}, ${controlPoint} ${y2}, ${x2} ${y2}`;
+            
+            path.setAttribute('d', d);
+            path.setAttribute('class', 'temp-connection');
+            path.setAttribute('stroke', '#999');
+            
+            svg.appendChild(path);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && currentDragModule) {
+                const canvasRect = canvas.getBoundingClientRect();
+                const newX = e.clientX - canvasRect.left - dragOffset.x;
+                const newY = e.clientY - canvasRect.top - dragOffset.y;
+                
+                currentDragModule.x = Math.max(0, Math.min(newX, canvasRect.width - 200));
+                currentDragModule.y = Math.max(0, Math.min(newY, canvasRect.height - 150));
+                
+                const moduleDiv = document.getElementById(`module-${currentDragModule.id}`);
+                moduleDiv.style.left = currentDragModule.x + 'px';
+                moduleDiv.style.top = currentDragModule.y + 'px';
+                
+                renderConnections();
+            } else if (selectedPort) {
+                drawTempConnection(e);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging && currentDragModule) {
+                const moduleDiv = document.getElementById(`module-${currentDragModule.id}`);
+                moduleDiv.classList.remove('dragging');
+            }
+            isDragging = false;
+            currentDragModule = null;
+            
+            const svg = document.querySelector('.connections');
+            const oldTemp = svg.querySelector('.temp-connection');
+            if (oldTemp) oldTemp.remove();
+        });
+
+        function handlePortClick(e) {
+            const port = e.target;
+            const moduleId = parseInt(port.dataset.moduleId);
+            const portType = port.dataset.portType;
+            const portIndex = parseInt(port.dataset.portIndex);
+            
+            if (!selectedPort) {
+                if (portType === 'output') {
+                    selectedPort = { moduleId, portType, portIndex, element: port };
+                    port.classList.add('active');
+                    showToast('Seleziona una porta input', 'success');
+                } else {
+                    port.classList.add('invalid');
+                    setTimeout(() => port.classList.remove('invalid'), 400);
+                    showToast('Inizia da una porta output (rossa)', 'error');
+                }
+            } else {
+                if (portType === 'input' && selectedPort.moduleId !== moduleId) {
+                    createConnection(selectedPort, { moduleId, portType, portIndex });
+                    selectedPort.element.classList.remove('active');
+                    port.classList.add('success');
+                    setTimeout(() => port.classList.remove('success'), 400);
+                    showToast('✓ Connessione creata', 'success');
+                    selectedPort = null;
+                } else if (portType === 'output') {
+                    selectedPort.element.classList.remove('active');
+                    selectedPort = { moduleId, portType, portIndex, element: port };
+                    port.classList.add('active');
+                } else {
+                    port.classList.add('invalid');
+                    setTimeout(() => port.classList.remove('invalid'), 400);
+                    showToast('Non puoi connettere allo stesso modulo', 'error');
+                }
+            }
+        }
+
+        function createConnection(from, to) {
+            connections.push({ from, to });
+            renderConnections();
+        }
+
+        function renderConnections() {
+            const svg = document.querySelector('.connections');
+            svg.querySelectorAll('.connection-line').forEach(line => line.remove());
+            
+            connections.forEach(conn => {
+                const fromModule = modules.find(m => m.id === conn.from.moduleId);
+                const toModule = modules.find(m => m.id === conn.to.moduleId);
+                
+                if (!fromModule || !toModule) return;
+                
+                const fromDiv = document.getElementById(`module-${fromModule.id}`);
+                const toDiv = document.getElementById(`module-${toModule.id}`);
+                
+                const fromRect = fromDiv.getBoundingClientRect();
+                const toRect = toDiv.getBoundingClientRect();
+                const canvasRect = canvas.getBoundingClientRect();
+                
+                const x1 = fromRect.right - canvasRect.left;
+                const y1 = fromRect.top - canvasRect.top + 40 + (conn.from.portIndex * 30);
+                const x2 = toRect.left - canvasRect.left;
+                const y2 = toRect.top - canvasRect.top + 40 + (conn.to.portIndex * 30);
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const controlPoint = (x1 + x2) / 2;
+                const d = `M ${x1} ${y1} C ${controlPoint} ${y1}, ${controlPoint} ${y2}, ${x2} ${y2}`;
+                
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'connection-line');
+                path.setAttribute('stroke', `url(#gradient-${fromModule.color})`);
+                
+                svg.appendChild(path);
+            });
+            
+            let defs = svg.querySelector('defs');
+            if (!defs) {
+                defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                svg.insertBefore(defs, svg.firstChild);
+            }
+            
+            const colors = {
+                'output': '#ff6b6b',
+                'playback': '#5f27cd',
+                'record': '#ee5a6f',
+                'synthesis': '#feca57',
+                'effects': '#fd79a8',
+                'filters': '#a29bfe',
+                'mixers': '#00b894',
+                'analysis': '#e17055'
+            };
+            
+            Object.entries(colors).forEach(([type, color]) => {
+                if (!defs.querySelector(`#gradient-${type}`)) {
+                    const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+                    gradient.setAttribute('id', `gradient-${type}`);
+                    gradient.innerHTML = `
+                        <stop offset="0%" stop-color="${color}" />
+                        <stop offset="100%" stop-color="${color}" stop-opacity="0.5" />
+                    `;
+                    defs.appendChild(gradient);
+                }
+            });
+        }
+
+        function deleteModule(id) {
+            const module = modules.find(m => m.id === id);
+            if (confirm(`Eliminare "${module.config.title}"?`)) {
+                modules = modules.filter(m => m.id !== id);
+                connections = connections.filter(c => 
+                    c.from.moduleId !== id && c.to.moduleId !== id
+                );
+                document.getElementById(`module-${id}`).remove();
+                renderConnections();
+                showToast('Modulo eliminato', 'success');
+            }
+        }
+
+        function clearCanvas() {
+            if (modules.length === 0) return;
+            
+            if (confirm('Sei sicuro di voler cancellare tutto?')) {
+                modules = [];
+                connections = [];
+                selectedModule = null;
+                selectedPort = null;
+                canvas.innerHTML = '';
+                document.querySelector('.connections').innerHTML = '';
+                showToast('Canvas pulito', 'success');
+            }
+        }
+
+        function exportDesign() {
+            if (modules.length === 0) {
+                showToast('Nessun modulo da esportare!', 'error');
+                return;
+            }
+
+            let code = `/*
+--------------------------------------
+Audio System Design
+Generato con Audio System Builder
+--------------------------------------
+Input Capacitivi
+artboard.touch(pin)  // pin: 0-11, ritorna valore capacitivo
+
+Pulsanti
+artboard.button(pin)  // pin: 0-7, ritorna HIGH o LOW
+
+Potenziometri
+artboard.pot(pin)  // pin: 0-7, ritorna valore 0-1023
+
+by Daniele Murgia © 2019-20 MIT License
+      sgtmurgia@gmail.com
+--------------------------------------
+*/
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+#include <Artboard.h>
+Artboard artboard;
+
+// GUItool: begin automatically generated code
+`;
+
+            const typeCounts = {};
+            const moduleNames = {};
+
+            modules.forEach(module => {
+                const baseType = module.type.replace('Audio', '').replace('Synth', '').replace('Effect', '').replace('Filter', '').replace('Analyze', '').toLowerCase();
+                if (!typeCounts[baseType]) {
+                    typeCounts[baseType] = 0;
+                }
+                typeCounts[baseType]++;
+                moduleNames[module.id] = baseType + typeCounts[baseType];
+            });
+
+            modules.forEach(module => {
+                const teensyType = module.type;
+                const name = moduleNames[module.id];
+                const spaces = ' '.repeat(Math.max(1, 29 - teensyType.length));
+                code += `${teensyType}${spaces}${name};${' '.repeat(Math.max(1, 20 - name.length))}//xy=${Math.round(module.x)},${Math.round(module.y)}\n`;
+            });
+
+            let connectionCounter = 1;
+            connections.forEach(conn => {
+                const fromModule = modules.find(m => m.id === conn.from.moduleId);
+                const toModule = modules.find(m => m.id === conn.to.moduleId);
+                
+                if (fromModule && toModule) {
+                    const fromName = moduleNames[fromModule.id];
+                    const toName = moduleNames[toModule.id];
+                    const fromPort = conn.from.portIndex;
+                    const toPort = conn.to.portIndex;
+                    
+                    code += `AudioConnection          patchCord${connectionCounter}(${fromName}, ${fromPort}, ${toName}, ${toPort});\n`;
+                    connectionCounter++;
+                }
+            });
+
+            code += `// GUItool: end automatically generated code
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Alloca la memoria per il sistema audio.
+  // 12 è un numero standard che funziona per quasi tutti i progetti.
+  AudioMemory(12);
+
+}
+
+void loop() {
+  // Il loop() è VUOTO!
+
+
+}
+`;
+
+            const zip = new JSZip();
+            const folderName = "audio_system";
+            const folder = zip.folder(folderName);
+            folder.file("audio_system.ino", code);
+
+            zip.generateAsync({type:"blob"}).then(function(content) {
+                saveAs(content, "audio_system.zip");
+                showToast('✓ Codice esportato!', 'success');
+            });
+            
+            console.log('Codice Teensy esportato:\n', code);
+        }
+    </script>
+</body>
+</html>
