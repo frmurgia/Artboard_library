@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)https://www.daniele-murgia.com/artboard/ -->
-<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio System Builder</title>
     <style>
@@ -468,8 +468,8 @@
             border-radius: 4px;
         }
     </style>
-    <script src="./Audio System Builder_files/jszip.min.js"></script>
-    <script src="./Audio System Builder_files/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -513,10 +513,6 @@
                 <div class="module-item" draggable="true" data-module-type="AudioSynthWaveform" data-color="synthesis">
                     <h4><span class="module-color-dot" style="background: #feca57;"></span>Waveform</h4>
                     <p>Forme d'onda multiple</p>
-                </div>
-                <div class="module-item" draggable="true" data-module-type="AudioSynthWaveformDc" data-color="synthesis">
-                    <h4><span class="module-color-dot" style="background: #feca57;"></span>DC Signal</h4>
-                    <p>Segnale DC costante</p>
                 </div>
                 <div class="module-item" draggable="true" data-module-type="AudioSynthNoisePink" data-color="synthesis">
                     <h4><span class="module-color-dot" style="background: #feca57;"></span>Pink Noise</h4>
@@ -594,91 +590,8 @@
         </div>
 
         <div class="canvas-container">
-            <svg class="connections"><defs><lineargradient id="gradient-output">
-                        <stop offset="0%" stop-color="#ff6b6b"></stop>
-                        <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-playback">
-                        <stop offset="0%" stop-color="#5f27cd"></stop>
-                        <stop offset="100%" stop-color="#5f27cd" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-record">
-                        <stop offset="0%" stop-color="#ee5a6f"></stop>
-                        <stop offset="100%" stop-color="#ee5a6f" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-synthesis">
-                        <stop offset="0%" stop-color="#feca57"></stop>
-                        <stop offset="100%" stop-color="#feca57" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-effects">
-                        <stop offset="0%" stop-color="#fd79a8"></stop>
-                        <stop offset="100%" stop-color="#fd79a8" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-filters">
-                        <stop offset="0%" stop-color="#a29bfe"></stop>
-                        <stop offset="100%" stop-color="#a29bfe" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-mixers">
-                        <stop offset="0%" stop-color="#00b894"></stop>
-                        <stop offset="100%" stop-color="#00b894" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-analysis">
-                        <stop offset="0%" stop-color="#e17055"></stop>
-                        <stop offset="100%" stop-color="#e17055" stop-opacity="0.5"></stop>
-                    </lineargradient></defs><path d="M 370 339 C 417 339, 417 249, 464 249" class="connection-line" stroke="url(#gradient-effects)"></path><path d="M 395 191 C 429.5 191, 429.5 219, 464 219" class="connection-line" stroke="url(#gradient-synthesis)"></path><path d="M 644 219 C 805 219, 805 267, 966 267" class="connection-line" stroke="url(#gradient-effects)"></path></svg>
-            <div class="canvas" id="canvas"><div class="canvas-module color-effects" id="module-2" style="left: 190px; top: 299px;">
-                <div class="module-header">
-                    <div class="module-title">Envelope</div>
-                    <button class="module-delete" onclick="deleteModule(2)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="2" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    </div><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="2" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-effects selected" id="module-4" style="left: 464px; top: 180px;">
-                <div class="module-header">
-                    <div class="module-title">Multiply</div>
-                    <button class="module-delete" onclick="deleteModule(4)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="4" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    
-                        <div>
-                            <div class="port input" data-module-id="4" data-port-type="input" data-port-index="1"></div>
-                            <div class="port-label">In 1</div>
-                        </div>
-                    </div><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="4" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-synthesis" id="module-7" style="left: 215px; top: 151px;">
-                <div class="module-header">
-                    <div class="module-title">Sine Osc</div>
-                    <button class="module-delete" onclick="deleteModule(7)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="7" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-output" id="module-8" style="left: 966px; top: 227px;">
-                <div class="module-header">
-                    <div class="module-title">DAC Output</div>
-                    <button class="module-delete" onclick="deleteModule(8)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="8" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    </div></div>
-            </div></div>
+            <svg class="connections"></svg>
+            <div class="canvas" id="canvas"></div>
             
             <div class="toolbar">
                 <button onclick="clearCanvas()">🗑️ Cancella</button>
@@ -686,31 +599,18 @@
                 <button onclick="toggleInfo()">📖 Info</button>
             </div>
 
-            <div class="info-panel" id="infoPanel">
+            <div class="info-panel hidden" id="infoPanel">
                 <button class="close-btn" onclick="closeInfo()">×</button>
                 <div id="infoPanelContent">
-                <h3>Multiply</h3>
-                <div class="info-section">
-                    <h4>Descrizione</h4>
-                    <p>Moltiplica due segnali (ring modulation). Crea effetti metallici.</p>
-                </div>
-                <div class="info-section">
-                    <h4>Porte</h4>
-                    <p>Input: 2 | Output: 1</p>
-                </div>
-                
-                
-                <div class="info-section">
-                    <h4>Esempio</h4>
-                    <div class="waveform-example">
-                        <code style="white-space: pre; font-size: 12px;">AudioConnection patchCord1(sine1, 0, multiply1, 0);
-AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
+                    <h3>💡 Guida</h3>
+                    <div class="info-section">
+                        <h4>Come usare</h4>
+                        <p>Trascina i moduli dalla barra laterale al canvas. Clicca sulle porte per connetterli. Ogni sistema audio deve finire con un modulo DAC Output per produrre suono.</p>
                     </div>
                 </div>
             </div>
-            </div>
 
-            <div class="toast success" id="toast">✓ Codice esportato!</div>
+            <div class="toast" id="toast"></div>
         </div>
     </div>
 
@@ -730,38 +630,33 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
             'AudioOutputAnalog': { title: 'DAC Output', outputs: 0, inputs: 1,
                 description: 'Output analogico tramite DAC integrato di Teensy (A21/DAC0). 12 bit mono output.',
                 functions: ['analogReference()'],
-                example: 'AudioSynthWaveformSine sine1;\nAudioOutputAnalog dac0;\nAudioConnection patchCord1(sine1, 0, dac0, 0);',
-                shortName: 'dac'
+                example: 'AudioSynthWaveformSine sine1;\nAudioOutputAnalog dac0;\nAudioConnection patchCord1(sine1, 0, dac0, 0);'
             },
-
+            
             // Playback
             'AudioPlaySdWav': { title: 'SD WAV', outputs: 2, inputs: 0,
                 description: 'Riproduce file WAV da SD card. Supporta stereo 16 bit 44.1 kHz.',
                 functions: ['play("filename.wav")', 'stop()', 'isPlaying()'],
-                example: 'void loop() {\n  if (artboard.button(0)>0) {\n    playSdWav1.play("sound.wav");\n  }\n}',
-                shortName: 'playSdWav'
+                example: 'void loop() {\n  if (artboard.button(0)>0) {\n    playSdWav1.play("sound.wav");\n  }\n}'
             },
             'AudioPlayMemory': { title: 'Play Mem', outputs: 1, inputs: 0,
                 description: 'Riproduce array di campioni dalla memoria. Usa wav2sketch per convertire.',
                 functions: ['play(array)', 'stop()'],
-                example: 'AudioPlayMemory sound1;\nsound1.play(AudioSampleKick);',
-                shortName: 'playMem'
+                example: 'AudioPlayMemory sound1;\nsound1.play(AudioSampleKick);'
             },
-
+            
             // Record
             'AudioRecordQueue': { title: 'Record', outputs: 0, inputs: 1,
                 description: 'Registra audio in un buffer circolare. Leggi con readBuffer().',
                 functions: ['begin()', 'available()', 'readBuffer()'],
-                example: 'if (queue1.available() >= 2) {\n  byte buffer[256];\n  memcpy(buffer, queue1.readBuffer(), 256);\n  queue1.freeBuffer();\n}',
-                shortName: 'queue'
+                example: 'if (queue1.available() >= 2) {\n  byte buffer[256];\n  memcpy(buffer, queue1.readBuffer(), 256);\n  queue1.freeBuffer();\n}'
             },
             
             // Synthesis
             'AudioSynthWaveformSine': { title: 'Sine Osc', outputs: 1, inputs: 0,
                 description: 'Oscillatore sinusoidale puro. ',
                 functions: ['frequency(hz)', 'amplitude(0.0-1.0)'],
-                example: 'sine1.frequency(440.0);\nsine1.amplitude(0.5);',
-                shortName: 'sine'
+                example: 'sine1.frequency(440.0);\nsine1.amplitude(0.5);'
             },
             'AudioSynthWaveform': { title: 'Waveform', outputs: 1, inputs: 0,
                 description: 'Oscillatore multi-forma d\'onda. Puoi scegliere tra Sine, Sawtooth, Square e Triangle. Perfetto per sintesi subtrattiva.',
@@ -772,106 +667,85 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
                     'WAVEFORM_SQUARE': 'Onda quadra - suono hollow, armoniche dispari',
                     'WAVEFORM_TRIANGLE': 'Triangolare - simile a sine ma con armoniche dispari'
                 },
-                example: 'waveform1.begin(WAVEFORM_SAWTOOTH);\nwaveform1.frequency(220);\nwaveform1.amplitude(0.8);\n\n// Cambia forma d\'onda:\nwaveform1.begin(WAVEFORM_SQUARE);\n\n// Square con PWM:\nwaveform1.pulseWidth(0.3);',
-                shortName: 'waveform'
-            },
-            'AudioSynthWaveformDc': { title: 'DC Signal', outputs: 1, inputs: 0,
-                description: 'Genera un segnale DC costante. Ideale come sorgente di controllo per VCA, modulazione, envelope manuale.',
-                functions: ['amplitude(0.0-1.0)'],
-                example: 'envelope.amplitude(0.5);  // Imposta livello DC a 50%\n\n// Esempio VCA:\nAudioSynthWaveformSine sine1;\nAudioSynthWaveformDc envelope;\nAudioEffectMultiply vca;\nenvelope.amplitude(0.8);',
-                shortName: 'envelope'
+                example: 'waveform1.begin(WAVEFORM_SAWTOOTH);\nwaveform1.frequency(220);\nwaveform1.amplitude(0.8);\n\n// Cambia forma d\'onda:\nwaveform1.begin(WAVEFORM_SQUARE);\n\n// Square con PWM:\nwaveform1.pulseWidth(0.3);'
             },
             'AudioSynthNoisePink': { title: 'Pink Noise', outputs: 1, inputs: 0,
                 description: 'Rumore rosa (1/f). -3dB per ottava. Più naturale del rumore bianco.',
                 functions: ['amplitude(0.0-1.0)'],
-                example: 'pink1.amplitude(0.3);',
-                shortName: 'pink'
+                example: 'pink1.amplitude(0.3);'
             },
             'AudioSynthNoiseWhite': { title: 'White Noise', outputs: 1, inputs: 0,
                 description: 'Rumore bianco. Tutte le frequenze con stessa ampiezza.',
                 functions: ['amplitude(0.0-1.0)'],
-                example: 'white1.amplitude(0.3);',
-                shortName: 'white'
+                example: 'white1.amplitude(0.3);'
             },
             
             // Effects
             'AudioEffectDelay': { title: 'Delay', outputs: 8, inputs: 1,
                 description: 'Delay line con 8 tap. Fino a 333ms. Usa memoria interna.',
                 functions: ['delay(channel, milliseconds)'],
-                example: 'delay1.delay(0, 200);  // 200ms sul tap 0\ndelay1.delay(1, 400);  // 400ms sul tap 1',
-                shortName: 'delay'
+                example: 'delay1.delay(0, 200);  // 200ms sul tap 0\ndelay1.delay(1, 400);  // 400ms sul tap 1'
             },
             'AudioEffectFreeverb': { title: 'Freeverb', outputs: 1, inputs: 1,
                 description: 'Algoritmo Freeverb mono. Riverbero di alta qualità.',
                 functions: ['roomsize(0.0-1.0)', 'damping(0.0-1.0)'],
-                example: 'freeverb1.roomsize(0.8);\nfreeverb1.damping(0.5);',
-                shortName: 'reverb'
+                example: 'freeverb1.roomsize(0.8);\nfreeverb1.damping(0.5);'
             },
             'AudioEffectEnvelope': { title: 'Envelope', outputs: 1, inputs: 1,
                 description: 'Generatore ADSR. Modula ampiezza nel tempo.',
                 functions: ['attack(ms)', 'decay(ms)', 'sustain(level)', 'release(ms)', 'noteOn()', 'noteOff()'],
-                example: 'envelope1.attack(10);\nenvelope1.decay(35);\nenvelope1.sustain(0.5);\nenvelope1.release(300);\nenvelope1.noteOn();',
-                shortName: 'adsr'
+                example: 'envelope1.attack(10);\nenvelope1.decay(35);\nenvelope1.sustain(0.5);\nenvelope1.release(300);\nenvelope1.noteOn();'
             },
             'AudioEffectMultiply': { title: 'Multiply', outputs: 1, inputs: 2,
                 description: 'Moltiplica due segnali (ring modulation). Crea effetti metallici.',
                 functions: [],
-                example: 'AudioConnection patchCord1(sine1, 0, multiply1, 0);\nAudioConnection patchCord2(sine2, 0, multiply1, 1);',
-                shortName: 'vca'
+                example: 'AudioConnection patchCord1(sine1, 0, multiply1, 0);\nAudioConnection patchCord2(sine2, 0, multiply1, 1);'
             },
-
+            
             // Filters
             'AudioFilterStateVariable': { title: 'State Var', outputs: 3, inputs: 1,
                 description: 'Filtro state variable. 3 output simultanei: lowpass, bandpass, highpass.',
                 functions: ['frequency(hz)', 'resonance(0.7-5.0)', 'octaveControl(octaves)'],
-                example: 'filter1.frequency(1000);\nfilter1.resonance(1.5);\n// Usa output 0=LP, 1=BP, 2=HP',
-                shortName: 'filter'
+                example: 'filter1.frequency(1000);\nfilter1.resonance(1.5);\n// Usa output 0=LP, 1=BP, 2=HP'
             },
             'AudioFilterBiquad': { title: 'Biquad', outputs: 1, inputs: 1,
                 description: 'Filtro IIR biquad. Configura come lowpass, highpass, bandpass, notch.',
                 functions: ['setLowpass(stage, freq, Q)', 'setHighpass(stage, freq, Q)', 'setBandpass(stage, freq, Q)', 'setNotch(stage, freq, Q)'],
-                example: 'biquad1.setLowpass(0, 800, 0.707);  // Butterworth\nbiquad1.setHighpass(1, 200, 0.707);',
-                shortName: 'biquad'
+                example: 'biquad1.setLowpass(0, 800, 0.707);  // Butterworth\nbiquad1.setHighpass(1, 200, 0.707);'
             },
-
+            
             // Mixers
             'AudioMixer4': { title: 'Mixer 4', outputs: 1, inputs: 4,
                 description: 'Mixer a 4 canali. Controlla gain di ogni canale.',
                 functions: ['gain(channel, level)'],
-                example: 'mixer1.gain(0, 0.5);  // canale 0 a 50%\nmixer1.gain(1, 0.8);  // canale 1 a 80%',
-                shortName: 'mixer'
+                example: 'mixer1.gain(0, 0.5);  // canale 0 a 50%\nmixer1.gain(1, 0.8);  // canale 1 a 80%'
             },
             'AudioAmplifier': { title: 'Amplifier', outputs: 1, inputs: 1,
                 description: 'Amplificatore/attenuatore semplice. Controllo volume.',
                 functions: ['gain(level)'],
-                example: 'amp1.gain(0.5);  // 50% volume\namp1.gain(2.0);  // +6dB amplificazione',
-                shortName: 'amp'
+                example: 'amp1.gain(0.5);  // 50% volume\namp1.gain(2.0);  // +6dB amplificazione'
             },
-
+            
             // Analysis
             'AudioAnalyzePeak': { title: 'Peak', outputs: 0, inputs: 1,
                 description: 'Misura ampiezza di picco. Utile per VU meter.',
                 functions: ['available()', 'read()'],
-                example: 'if (peak1.available()) {\n  float val = peak1.read();\n  Serial.println(val);\n}',
-                shortName: 'peak'
+                example: 'if (peak1.available()) {\n  float val = peak1.read();\n  Serial.println(val);\n}'
             },
             'AudioAnalyzeRMS': { title: 'RMS', outputs: 0, inputs: 1,
                 description: 'Calcola RMS (potenza media). Migliore per loudness percepito.',
                 functions: ['available()', 'read()'],
-                example: 'if (rms1.available()) {\n  float level = rms1.read();\n}',
-                shortName: 'rms'
+                example: 'if (rms1.available()) {\n  float level = rms1.read();\n}'
             },
             'AudioAnalyzeFFT256': { title: 'FFT 256', outputs: 0, inputs: 1,
                 description: 'FFT a 256 punti. Analisi spettrale veloce.',
                 functions: ['available()', 'read(bin)', 'read(first, last)'],
-                example: 'if (fft256.available()) {\n  for (int i=0; i<128; i++) {\n    float level = fft256.read(i);\n  }\n}',
-                shortName: 'fft256'
+                example: 'if (fft256.available()) {\n  for (int i=0; i<128; i++) {\n    float level = fft256.read(i);\n  }\n}'
             },
             'AudioAnalyzeFFT1024': { title: 'FFT 1024', outputs: 0, inputs: 1,
                 description: 'FFT a 1024 punti. Maggiore risoluzione in frequenza.',
                 functions: ['available()', 'read(bin)'],
-                example: 'if (fft1024.available()) {\n  float bass = fft1024.read(0, 10);  // 0-430 Hz\n}',
-                shortName: 'fft1024'
+                example: 'if (fft1024.available()) {\n  float bass = fft1024.read(0, 10);  // 0-430 Hz\n}'
             }
         };
 
@@ -1307,36 +1181,15 @@ Artboard artboard;
 `;
 
             const typeCounts = {};
-            const typeModules = {};
             const moduleNames = {};
 
-            // Prima passata: conta i moduli per tipo
             modules.forEach(module => {
-                const config = moduleConfigs[module.type];
-                const baseType = config && config.shortName ? config.shortName : module.type.replace('Audio', '').replace('Synth', '').replace('Effect', '').replace('Filter', '').replace('Analyze', '').toLowerCase();
+                const baseType = module.type.replace('Audio', '').replace('Synth', '').replace('Effect', '').replace('Filter', '').replace('Analyze', '').toLowerCase();
                 if (!typeCounts[baseType]) {
                     typeCounts[baseType] = 0;
-                    typeModules[baseType] = [];
                 }
                 typeCounts[baseType]++;
-                typeModules[baseType].push(module.id);
-            });
-
-            // Seconda passata: assegna i nomi
-            modules.forEach(module => {
-                const config = moduleConfigs[module.type];
-                const baseType = config && config.shortName ? config.shortName : module.type.replace('Audio', '').replace('Synth', '').replace('Effect', '').replace('Filter', '').replace('Analyze', '').toLowerCase();
-
-                // DAC usa sempre 0 (perché si riferisce al pin hardware DAC0)
-                if (baseType === 'dac') {
-                    const index = typeModules[baseType].indexOf(module.id);
-                    moduleNames[module.id] = baseType + index;
-                }
-                // Tutti gli altri moduli usano numeri partendo da 1
-                else {
-                    const index = typeModules[baseType].indexOf(module.id) + 1;
-                    moduleNames[module.id] = baseType + index;
-                }
+                moduleNames[module.id] = baseType + typeCounts[baseType];
             });
 
             modules.forEach(module => {
@@ -1393,5 +1246,5 @@ void loop() {
             console.log('Codice Teensy esportato:\n', code);
         }
     </script>
-
-</body></html>
+</body>
+</html>
