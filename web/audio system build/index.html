@@ -659,7 +659,7 @@
                 example: 'if (queue1.available() >= 2) {\n  byte buffer[256];\n  memcpy(buffer, queue1.readBuffer(), 256);\n  queue1.freeBuffer();\n}',
                 shortName: 'queue'
             },
-            
+
             // Synthesis
             'AudioSynthWaveformSine': { title: 'Sine Osc', outputs: 1, inputs: 0,
                 description: 'Oscillatore sinusoidale puro. ',
@@ -723,7 +723,7 @@
                 example: 'AudioConnection patchCord1(sine1, 0, multiply1, 0);\nAudioConnection patchCord2(sine2, 0, multiply1, 1);',
                 shortName: 'vca'
             },
-            
+
             // Filters
             'AudioFilterStateVariable': { title: 'State Var', outputs: 3, inputs: 1,
                 description: 'Filtro state variable. 3 output simultanei: lowpass, bandpass, highpass.',
