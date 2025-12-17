@@ -22,20 +22,20 @@ by Daniele Murgia © 2019-20 MIT License
 #include <SD.h>
 #include <SerialFlash.h>
 
-#include <Artboard.h> // includiamo la libreria
-Artboard artboard;    // Istanza
+#include <Artboard.h>  // includiamo la libreria
+Artboard artboard;     // Istanza
 
 // GUItool: begin automatically generated code
 // (Modificato per uscita MONO e per chiarezza)
 
-AudioSynthWaveformSine   sine1;       // Il nostro oscillatore (genera il suono)
-AudioSynthWaveformDc     envelope;    // Un segnale DC che useremo come inviluppo
-AudioEffectMultiply      vca;         // Il "VCA": moltiplica Suono * Inviluppo
-AudioOutputAnalog        dac;         // Uscita audio MONO
+AudioSynthWaveformSine sine1;   // Il nostro oscillatore (genera il suono)
+AudioSynthWaveformDc envelope;  // Un segnale DC che useremo come inviluppo
+AudioEffectMultiply vca;        // Il "VCA": moltiplica Suono * Inviluppo
+AudioOutputAnalog dac;          // Uscita audio MONO
 
-AudioConnection          patchCord1(sine1, 0, vca, 0);     // Sinusoide -> Ingresso A del VCA
-AudioConnection          patchCord2(envelope, 0, vca, 1);  // Inviluppo -> Ingresso B del VCA
-AudioConnection          patchCord3(vca, 0, dac, 0);       // Uscita VCA -> DAC (casse)
+AudioConnection patchCord1(sine1, 0, vca, 0);     // Sinusoide -> Ingresso A del VCA
+AudioConnection patchCord2(envelope, 0, vca, 1);  // Inviluppo -> Ingresso B del VCA
+AudioConnection patchCord3(vca, 0, dac, 0);       // Uscita VCA -> DAC (casse)
 // GUItool: end automatically generated code
 
 
@@ -44,26 +44,25 @@ bool notaAttiva = false;
 
 // Definiamo la frequenza della nota
 float DO = 261.6;
- 
+
 void setup() {
   AudioMemory(12);
   Serial.begin(9600);
-  
+
   // Impostiamo il volume della sinusoide al massimo (1.0).
   // Sarà l'inviluppo a controllarne il volume finale.
   sine1.amplitude(1.0);
-  
+
   // Impostiamo la frequenza della nota (una sola volta)
-  sine1.frequency(DO * 2); // Un'ottava sopra
-  
+  sine1.frequency(DO * 2);  // Un'ottava sopra
+
   // IMPORTANTE: Inizializza l'inviluppo a 0 (silenzio)
   envelope.amplitude(0.0);
-  
+
   Serial.println("Sketch 3: Inviluppo Attack/Release");
   Serial.println("Tocca il pad 0 per suonare.");
   Serial.println("Usa i pot 0 (Attack) e 1 (Release).");
 }
-
 void loop() {
 
   // 1. Leggi i potenziometri e mappali in un range utile (in millisecondi)
@@ -72,39 +71,14 @@ void loop() {
   int attackTime = map(artboard.pot(0), 0, 1023, 5, 1000);
   int releaseTime = map(artboard.pot(1), 0, 1023, 5, 1000);
 
-  // 2. Controlla se il pad touch è premuto
-  bool touchPremuto = (artboard.touch(0) > 8000);
 
-
-  // 3. Logica di "Edge Detection" (Rilevamento del cambiamento)
-
-  // --- Evento NOTE ON ---
-  // Se il tasto è PREMUTO (touchPremuto == true)
-  // E la nota era SPENTA (notaAttiva == false)
-  if (touchPremuto && !notaAttiva) {
-    notaAttiva = true; // Imposta lo stato su "accesa"
-    
-    // Avvia l'inviluppo: vai a volume 1.0 in 'attackTime' millisecondi
+  if (artboard.touch(0) > 8000) {
+    // Pad premuto: avvia l'attacco
     envelope.amplitude(1.0, attackTime);
-    
-    Serial.print("NOTA ON (Attacco: ");
-    Serial.print(attackTime);
-    Serial.println("ms)");
-  }
-  
-  // --- Evento NOTE OFF ---
-  // Se il tasto è RILASCIATO (touchPremuto == false)
-  // E la nota era ACCESA (notaAttiva == true)
-  else if (!touchPremuto && notaAttiva) {
-    notaAttiva = false; // Imposta lo stato su "spenta"
-    
-    // Avvia l'inviluppo: vai a volume 0.0 in 'releaseTime' millisecondi
+  } else {
+    // Pad rilasciato: avvia il rilascio
     envelope.amplitude(0.0, releaseTime);
-    
-    Serial.print("NOTA OFF (Rilascio: ");
-    Serial.print(releaseTime);
-    Serial.println("ms)");
   }
-  
-  delay(10); // Piccolo delay per stabilizzare le letture
+
+  delay(10);  // Piccolo delay per stabilizzare le letture
 }
