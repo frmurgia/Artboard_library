@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)https://www.daniele-murgia.com/artboard/ -->
-<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio System Builder</title>
     <style>
@@ -468,8 +468,8 @@
             border-radius: 4px;
         }
     </style>
-    <script src="./Audio System Builder_files/jszip.min.js"></script>
-    <script src="./Audio System Builder_files/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -516,7 +516,7 @@
                 </div>
                 <div class="module-item" draggable="true" data-module-type="AudioSynthWaveformDc" data-color="synthesis">
                     <h4><span class="module-color-dot" style="background: #feca57;"></span>DC Signal</h4>
-                    <p>Segnale DC costante</p>
+                    <p>Segnale DC / Envelope</p>
                 </div>
                 <div class="module-item" draggable="true" data-module-type="AudioSynthNoisePink" data-color="synthesis">
                     <h4><span class="module-color-dot" style="background: #feca57;"></span>Pink Noise</h4>
@@ -594,91 +594,8 @@
         </div>
 
         <div class="canvas-container">
-            <svg class="connections"><defs><lineargradient id="gradient-output">
-                        <stop offset="0%" stop-color="#ff6b6b"></stop>
-                        <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-playback">
-                        <stop offset="0%" stop-color="#5f27cd"></stop>
-                        <stop offset="100%" stop-color="#5f27cd" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-record">
-                        <stop offset="0%" stop-color="#ee5a6f"></stop>
-                        <stop offset="100%" stop-color="#ee5a6f" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-synthesis">
-                        <stop offset="0%" stop-color="#feca57"></stop>
-                        <stop offset="100%" stop-color="#feca57" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-effects">
-                        <stop offset="0%" stop-color="#fd79a8"></stop>
-                        <stop offset="100%" stop-color="#fd79a8" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-filters">
-                        <stop offset="0%" stop-color="#a29bfe"></stop>
-                        <stop offset="100%" stop-color="#a29bfe" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-mixers">
-                        <stop offset="0%" stop-color="#00b894"></stop>
-                        <stop offset="100%" stop-color="#00b894" stop-opacity="0.5"></stop>
-                    </lineargradient><lineargradient id="gradient-analysis">
-                        <stop offset="0%" stop-color="#e17055"></stop>
-                        <stop offset="100%" stop-color="#e17055" stop-opacity="0.5"></stop>
-                    </lineargradient></defs><path d="M 370 339 C 417 339, 417 249, 464 249" class="connection-line" stroke="url(#gradient-effects)"></path><path d="M 395 191 C 429.5 191, 429.5 219, 464 219" class="connection-line" stroke="url(#gradient-synthesis)"></path><path d="M 644 219 C 805 219, 805 267, 966 267" class="connection-line" stroke="url(#gradient-effects)"></path></svg>
-            <div class="canvas" id="canvas"><div class="canvas-module color-effects" id="module-2" style="left: 190px; top: 299px;">
-                <div class="module-header">
-                    <div class="module-title">Envelope</div>
-                    <button class="module-delete" onclick="deleteModule(2)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="2" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    </div><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="2" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-effects selected" id="module-4" style="left: 464px; top: 180px;">
-                <div class="module-header">
-                    <div class="module-title">Multiply</div>
-                    <button class="module-delete" onclick="deleteModule(4)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="4" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    
-                        <div>
-                            <div class="port input" data-module-id="4" data-port-type="input" data-port-index="1"></div>
-                            <div class="port-label">In 1</div>
-                        </div>
-                    </div><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="4" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-synthesis" id="module-7" style="left: 215px; top: 151px;">
-                <div class="module-header">
-                    <div class="module-title">Sine Osc</div>
-                    <button class="module-delete" onclick="deleteModule(7)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px; margin-left: auto;">
-                        <div>
-                            <div class="port output" data-module-id="7" data-port-type="output" data-port-index="0"></div>
-                            <div class="port-label">Out 0</div>
-                        </div>
-                    </div></div>
-            </div><div class="canvas-module color-output" id="module-8" style="left: 966px; top: 227px;">
-                <div class="module-header">
-                    <div class="module-title">DAC Output</div>
-                    <button class="module-delete" onclick="deleteModule(8)">×</button>
-                </div>
-                <div class="module-ports"><div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div>
-                            <div class="port input" data-module-id="8" data-port-type="input" data-port-index="0"></div>
-                            <div class="port-label">In 0</div>
-                        </div>
-                    </div></div>
-            </div></div>
+            <svg class="connections"></svg>
+            <div class="canvas" id="canvas"></div>
             
             <div class="toolbar">
                 <button onclick="clearCanvas()">🗑️ Cancella</button>
@@ -686,31 +603,18 @@
                 <button onclick="toggleInfo()">📖 Info</button>
             </div>
 
-            <div class="info-panel" id="infoPanel">
+            <div class="info-panel hidden" id="infoPanel">
                 <button class="close-btn" onclick="closeInfo()">×</button>
                 <div id="infoPanelContent">
-                <h3>Multiply</h3>
-                <div class="info-section">
-                    <h4>Descrizione</h4>
-                    <p>Moltiplica due segnali (ring modulation). Crea effetti metallici.</p>
-                </div>
-                <div class="info-section">
-                    <h4>Porte</h4>
-                    <p>Input: 2 | Output: 1</p>
-                </div>
-                
-                
-                <div class="info-section">
-                    <h4>Esempio</h4>
-                    <div class="waveform-example">
-                        <code style="white-space: pre; font-size: 12px;">AudioConnection patchCord1(sine1, 0, multiply1, 0);
-AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
+                    <h3>💡 Guida</h3>
+                    <div class="info-section">
+                        <h4>Come usare</h4>
+                        <p>Trascina i moduli dalla barra laterale al canvas. Clicca sulle porte per connetterli. Ogni sistema audio deve finire con un modulo DAC Output per produrre suono.</p>
                     </div>
                 </div>
             </div>
-            </div>
 
-            <div class="toast success" id="toast">✓ Codice esportato!</div>
+            <div class="toast" id="toast"></div>
         </div>
     </div>
 
@@ -730,7 +634,7 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
             'AudioOutputAnalog': { title: 'DAC Output', outputs: 0, inputs: 1,
                 description: 'Output analogico tramite DAC integrato di Teensy (A21/DAC0). 12 bit mono output.',
                 functions: ['analogReference()'],
-                example: 'AudioSynthWaveformSine sine1;\nAudioOutputAnalog dac0;\nAudioConnection patchCord1(sine1, 0, dac0, 0);',
+                example: 'AudioSynthWaveformSine sine1;\nAudioOutputAnalog dac0;\nAudioConnection patchCord1(sine1, dac0);',
                 shortName: 'dac'
             },
 
@@ -755,7 +659,7 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
                 example: 'if (queue1.available() >= 2) {\n  byte buffer[256];\n  memcpy(buffer, queue1.readBuffer(), 256);\n  queue1.freeBuffer();\n}',
                 shortName: 'queue'
             },
-            
+
             // Synthesis
             'AudioSynthWaveformSine': { title: 'Sine Osc', outputs: 1, inputs: 0,
                 description: 'Oscillatore sinusoidale puro. ',
@@ -778,8 +682,8 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
             'AudioSynthWaveformDc': { title: 'DC Signal', outputs: 1, inputs: 0,
                 description: 'Genera un segnale DC costante. Ideale come sorgente di controllo per VCA, modulazione, envelope manuale.',
                 functions: ['amplitude(0.0-1.0)'],
-                example: 'envelope.amplitude(0.5);  // Imposta livello DC a 50%\n\n// Esempio VCA:\nAudioSynthWaveformSine sine1;\nAudioSynthWaveformDc envelope;\nAudioEffectMultiply vca;\nenvelope.amplitude(0.8);',
-                shortName: 'envelope'
+                example: 'voice1env1.amplitude(0.5);  // Imposta livello DC a 50%\n\n// Esempio VCA:\nAudioSynthWaveform waveform1;\nAudioSynthWaveformDc voice1env1;\nAudioEffectMultiply multiply1;\nvoice1env1.amplitude(0.8);',
+                shortName: 'voice1env'
             },
             'AudioSynthNoisePink': { title: 'Pink Noise', outputs: 1, inputs: 0,
                 description: 'Rumore rosa (1/f). -3dB per ottava. Più naturale del rumore bianco.',
@@ -810,14 +714,14 @@ AudioConnection patchCord2(sine2, 0, multiply1, 1);</code>
             'AudioEffectEnvelope': { title: 'Envelope', outputs: 1, inputs: 1,
                 description: 'Generatore ADSR. Modula ampiezza nel tempo.',
                 functions: ['attack(ms)', 'decay(ms)', 'sustain(level)', 'release(ms)', 'noteOn()', 'noteOff()'],
-                example: 'envelope1.attack(10);\nenvelope1.decay(35);\nenvelope1.sustain(0.5);\nenvelope1.release(300);\nenvelope1.noteOn();',
+                example: 'adsr1.attack(10);\nadsr1.decay(35);\nadsr1.sustain(0.5);\nadsr1.release(300);\nadsr1.noteOn();',
                 shortName: 'adsr'
             },
             'AudioEffectMultiply': { title: 'Multiply', outputs: 1, inputs: 2,
                 description: 'Moltiplica due segnali (ring modulation). Crea effetti metallici.',
                 functions: [],
-                example: 'AudioConnection patchCord1(sine1, 0, multiply1, 0);\nAudioConnection patchCord2(sine2, 0, multiply1, 1);',
-                shortName: 'vca'
+                example: 'AudioConnection patchCord1(sine1, multiply1);\nAudioConnection patchCord2(voice1env1, 0, multiply1, 1);',
+                shortName: 'multiply'
             },
 
             // Filters
@@ -1327,7 +1231,7 @@ Artboard artboard;
                 const config = moduleConfigs[module.type];
                 const baseType = config && config.shortName ? config.shortName : module.type.replace('Audio', '').replace('Synth', '').replace('Effect', '').replace('Filter', '').replace('Analyze', '').toLowerCase();
 
-                // DAC usa sempre 0 (perché si riferisce al pin hardware DAC0)
+                // DAC usa sempre 0 (dac0)
                 if (baseType === 'dac') {
                     const index = typeModules[baseType].indexOf(module.id);
                     moduleNames[module.id] = baseType + index;
@@ -1342,22 +1246,28 @@ Artboard artboard;
             modules.forEach(module => {
                 const teensyType = module.type;
                 const name = moduleNames[module.id];
-                const spaces = ' '.repeat(Math.max(1, 29 - teensyType.length));
-                code += `${teensyType}${spaces}${name};${' '.repeat(Math.max(1, 20 - name.length))}//xy=${Math.round(module.x)},${Math.round(module.y)}\n`;
+                const spaces = ' '.repeat(Math.max(1, 25 - teensyType.length));
+                const nameSpaces = ' '.repeat(Math.max(1, 17 - name.length));
+                code += `${teensyType}${spaces}${name};${nameSpaces}//xy=${module.x.toFixed(1)},${module.y.toFixed(1)}\n`;
             });
 
             let connectionCounter = 1;
             connections.forEach(conn => {
                 const fromModule = modules.find(m => m.id === conn.from.moduleId);
                 const toModule = modules.find(m => m.id === conn.to.moduleId);
-                
+
                 if (fromModule && toModule) {
                     const fromName = moduleNames[fromModule.id];
                     const toName = moduleNames[toModule.id];
                     const fromPort = conn.from.portIndex;
                     const toPort = conn.to.portIndex;
-                    
-                    code += `AudioConnection          patchCord${connectionCounter}(${fromName}, ${fromPort}, ${toName}, ${toPort});\n`;
+
+                    // Semplifica la connessione se entrambe le porte sono 0
+                    if (fromPort === 0 && toPort === 0) {
+                        code += `AudioConnection          patchCord${connectionCounter}(${fromName}, ${toName});\n`;
+                    } else {
+                        code += `AudioConnection          patchCord${connectionCounter}(${fromName}, ${fromPort}, ${toName}, ${toPort});\n`;
+                    }
                     connectionCounter++;
                 }
             });
@@ -1393,5 +1303,5 @@ void loop() {
             console.log('Codice Teensy esportato:\n', code);
         }
     </script>
-
-</body></html>
+</body>
+</html>
