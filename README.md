@@ -118,18 +118,6 @@ artboard.button(pin)  // pin: 0-7, ritorna HIGH o LOW
 artboard.pot(pin)  // pin: 0-7, ritorna valore 0-1023
 ```
 
-### LED RGB
-```cpp
-artboard.setLED(index, r, g, b)  // Imposta LED specifico (0-7)
-artboard.setAllLEDs(r, g, b)     // Imposta tutti i LED
-artboard.clearLED(index)         // Spegne LED specifico
-artboard.clearAllLEDs()          // Spegne tutti i LED
-artboard.setBrightness(value)    // Imposta luminosità (0-255)
-artboard.updateLEDs()            // Aggiorna i LED manualmente
-```
-
-**Nota**: I LED usano la libreria FastLED e sono collegati al pin 8. Assicurati di avere FastLED installata.
-
 ### Pin Digitali/Analogici
 ```cpp
 artboard.pinMode(pin, mode)  // Configura modalità pin (0-11)
