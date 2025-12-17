@@ -4,11 +4,15 @@
 */
 
   // initialize serial for debugging
-  Serial.begin(115200);
-  // initialize serial for ESP module
-  Serial1.begin(115200);
-  // initialize ESP module
+ 
+
+ Serial.begin(115200);   // Verso il PC
+  Serial1.begin(115200);  // Verso l'ESP (Prova anche 9600 se non va)
   WiFi.init(&Serial1);
+  // Attendi l'apertura del monitor seriale
+  while (!Serial); 
+  Serial.println("--- MODALITÀ PONTE ATTIVA ---");
+  Serial.println("Scrivi 'AT' e premi Invio. Se ricevi 'OK', l'ESP funziona.");
 
   // check for the presence of the shield
   if (WiFi.status() == WL_NO_SHIELD) {
