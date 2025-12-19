@@ -52,91 +52,98 @@ by Daniele Murgia © 2019-20 MIT License
 #include <Artboard.h>
 Artboard artboard;
 
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioSynthWaveformDc     voice1env4;
-AudioSynthWaveformDc     voice1env2;
-AudioSynthWaveformDc     voice1env3;
-AudioSynthWaveformDc     voice1env1;
-AudioSynthWaveformSine   sine4;
-AudioSynthWaveformDc     voice1env5;
-AudioSynthWaveformSine   sine1;
-AudioSynthWaveformDc     voice1env7;
-AudioSynthWaveformDc     voice1env9;
-AudioSynthWaveformSine   sine2;
-AudioSynthWaveformDc     voice1env10;
-AudioSynthWaveformDc     voice1env8;
-AudioSynthWaveformSine   sine3;
-AudioSynthWaveformDc     voice1env6;
-AudioSynthWaveformDc     voice1env12;
-AudioSynthWaveformSine   sine5;
-AudioSynthWaveformSine   sine7;
-AudioSynthWaveformSine   sine9;
-AudioSynthWaveformDc     voice1env11;
-AudioSynthWaveformSine   sine6;
-AudioSynthWaveformSine   sine8;
-AudioSynthWaveformSine   sine10;
-AudioSynthWaveformSine   sine12;
-AudioSynthWaveformSine   sine11;
-AudioEffectMultiply      multiply12;
-AudioEffectMultiply      multiply11;
-AudioEffectMultiply      multiply2;
-AudioEffectMultiply      multiply1;
-AudioEffectMultiply      multiply10;
-AudioEffectMultiply      multiply3;
-AudioEffectMultiply      multiply9;
-AudioEffectMultiply      multiply7;
-AudioEffectMultiply      multiply6;
-AudioEffectMultiply      multiply4;
-AudioEffectMultiply      multiply8;
-AudioEffectMultiply      multiply5;
-AudioMixer4              mixer2;
-AudioMixer4              mixer1;
-AudioMixer4              mixer3;
-AudioMixer4              mixer4;
-AudioAnalyzePeak         peak1;
-AudioOutputAnalog        dac0;
-AudioConnection          patchCord1(voice1env4, 0, multiply4, 1);
-AudioConnection          patchCord2(voice1env2, 0, multiply2, 1);
-AudioConnection          patchCord3(voice1env3, 0, multiply3, 1);
-AudioConnection          patchCord4(voice1env1, 0, multiply1, 1);
-AudioConnection          patchCord5(sine4, 0, multiply4, 0);
-AudioConnection          patchCord6(voice1env5, 0, multiply5, 1);
-AudioConnection          patchCord7(sine1, 0, multiply1, 0);
-AudioConnection          patchCord8(voice1env7, 0, multiply7, 1);
-AudioConnection          patchCord9(voice1env9, 0, multiply9, 1);
-AudioConnection          patchCord10(sine2, 0, multiply2, 0);
-AudioConnection          patchCord11(voice1env10, 0, multiply10, 1);
-AudioConnection          patchCord12(voice1env8, 0, multiply8, 1);
-AudioConnection          patchCord13(sine3, 0, multiply3, 0);
-AudioConnection          patchCord14(voice1env6, 0, multiply6, 1);
-AudioConnection          patchCord15(voice1env12, 0, multiply12, 1);
-AudioConnection          patchCord16(sine5, 0, multiply5, 0);
-AudioConnection          patchCord17(sine7, 0, multiply7, 0);
-AudioConnection          patchCord18(sine9, 0, multiply9, 0);
-AudioConnection          patchCord19(voice1env11, 0, multiply11, 1);
-AudioConnection          patchCord20(sine6, 0, multiply6, 0);
-AudioConnection          patchCord21(sine8, 0, multiply8, 0);
-AudioConnection          patchCord22(sine10, 0, multiply10, 0);
-AudioConnection          patchCord23(sine12, 0, multiply12, 0);
-AudioConnection          patchCord24(sine11, 0, multiply11, 0);
-AudioConnection          patchCord25(multiply12, 0, mixer3, 3);
-AudioConnection          patchCord26(multiply11, 0, mixer3, 2);
-AudioConnection          patchCord27(multiply2, 0, mixer1, 1);
-AudioConnection          patchCord28(multiply1, 0, mixer1, 0);
-AudioConnection          patchCord29(multiply10, 0, mixer3, 1);
-AudioConnection          patchCord30(multiply3, 0, mixer1, 2);
-AudioConnection          patchCord31(multiply9, 0, mixer3, 0);
-AudioConnection          patchCord32(multiply7, 0, mixer2, 2);
-AudioConnection          patchCord33(multiply6, 0, mixer2, 1);
-AudioConnection          patchCord34(multiply4, 0, mixer1, 3);
-AudioConnection          patchCord35(multiply8, 0, mixer2, 3);
-AudioConnection          patchCord36(multiply5, 0, mixer2, 0);
-AudioConnection          patchCord37(mixer2, 0, mixer4, 1);
-AudioConnection          patchCord38(mixer1, 0, mixer4, 0);
+AudioSynthWaveformDc     voice1env5;     //xy=305.5,744
+AudioSynthWaveformDc     voice1env7;     //xy=307.5,896
+AudioSynthWaveformDc     voice1env8;     //xy=310.5,974
+AudioSynthWaveformDc     voice1env4;     //xy=313.5,623
+AudioSynthWaveformSine   sine5;          //xy=313.5,710
+AudioSynthWaveformDc     voice1env6;     //xy=313.5,824
+AudioSynthWaveformDc     voice1env2;     //xy=320.5,495
+AudioSynthWaveformSine   sine6;          //xy=319.5,789
+AudioSynthWaveformSine   sine7;          //xy=319.5,865
+AudioSynthWaveformDc     voice1env3;     //xy=321.5,564
+AudioSynthWaveformSine   sine8;          //xy=322.5,942
+AudioSynthWaveformSine   sine4;          //xy=326.5,596
+AudioSynthWaveformDc     voice1env1;     //xy=327.5,420
+AudioSynthWaveformSine   sine2;          //xy=330.5,463
+AudioSynthWaveformSine   sine3;          //xy=331.5,532
+AudioSynthWaveformSine   sine1;          //xy=342.5,385
+AudioSynthWaveformDc     voice1env10;    //xy=354.5,1178
+AudioSynthWaveformDc     voice1env11;    //xy=356.5,1246
+AudioSynthWaveformDc     voice1env9;     //xy=360.5,1093
+AudioSynthWaveformSine   sine12;         //xy=360.5,1287
+AudioSynthWaveformSine   sine11;         //xy=367.5,1216
+AudioSynthWaveformDc     voice1env12;    //xy=367.5,1319
+AudioSynthWaveformSine   sine10;         //xy=371.5,1140
+AudioSynthWaveformSine   sine9;          //xy=372.5,1055
+AudioEffectMultiply      multiply1;      //xy=544.5,395
+AudioEffectMultiply      multiply2;      //xy=549.5,486
+AudioEffectMultiply      multiply4;      //xy=552,580
+AudioEffectMultiply      multiply7;      //xy=551,846
+AudioEffectMultiply      multiply5;      //xy=553,739
+AudioEffectMultiply      multiply8;      //xy=553,902
+AudioEffectMultiply      multiply3;      //xy=555,526
+AudioEffectMultiply      multiply6;      //xy=554,794
+AudioEffectMultiply      multiply9;      //xy=569,1108
+AudioEffectMultiply      multiply11;     //xy=570.5,1230
+AudioEffectMultiply      multiply10;     //xy=571,1162
+AudioEffectMultiply      multiply12;     //xy=576.5,1297
+AudioMixer4              mixer1;         //xy=728,498
+AudioMixer4              mixer2;         //xy=759,838
+AudioMixer4              mixer3;         //xy=767,1161
+AudioMixer4              mixer4;         //xy=966,808
+AudioAnalyzePeak         peak1;          //xy=1193,551
+AudioOutputAnalog        dac0;           //xy=1194,596
+AudioConnection          patchCord1(voice1env5, 0, multiply5, 1);
+AudioConnection          patchCord2(voice1env7, 0, multiply7, 1);
+AudioConnection          patchCord3(voice1env8, 0, multiply8, 1);
+AudioConnection          patchCord4(voice1env4, 0, multiply4, 1);
+AudioConnection          patchCord5(sine5, 0, multiply5, 0);
+AudioConnection          patchCord6(voice1env6, 0, multiply6, 1);
+AudioConnection          patchCord7(voice1env2, 0, multiply2, 1);
+AudioConnection          patchCord8(sine6, 0, multiply6, 0);
+AudioConnection          patchCord9(sine7, 0, multiply7, 0);
+AudioConnection          patchCord10(voice1env3, 0, multiply3, 1);
+AudioConnection          patchCord11(sine8, 0, multiply8, 0);
+AudioConnection          patchCord12(sine4, 0, multiply4, 0);
+AudioConnection          patchCord13(voice1env1, 0, multiply1, 1);
+AudioConnection          patchCord14(sine2, 0, multiply2, 0);
+AudioConnection          patchCord15(sine3, 0, multiply3, 0);
+AudioConnection          patchCord16(sine1, 0, multiply1, 0);
+AudioConnection          patchCord17(voice1env10, 0, multiply10, 1);
+AudioConnection          patchCord18(voice1env11, 0, multiply11, 1);
+AudioConnection          patchCord19(voice1env9, 0, multiply9, 1);
+AudioConnection          patchCord20(sine12, 0, multiply12, 0);
+AudioConnection          patchCord21(sine11, 0, multiply11, 0);
+AudioConnection          patchCord22(voice1env12, 0, multiply12, 1);
+AudioConnection          patchCord23(sine10, 0, multiply10, 0);
+AudioConnection          patchCord24(sine9, 0, multiply9, 0);
+AudioConnection          patchCord25(multiply1, 0, mixer1, 0);
+AudioConnection          patchCord26(multiply2, 0, mixer1, 1);
+AudioConnection          patchCord27(multiply4, 0, mixer1, 3);
+AudioConnection          patchCord28(multiply7, 0, mixer2, 2);
+AudioConnection          patchCord29(multiply5, 0, mixer2, 0);
+AudioConnection          patchCord30(multiply8, 0, mixer2, 3);
+AudioConnection          patchCord31(multiply3, 0, mixer1, 2);
+AudioConnection          patchCord32(multiply6, 0, mixer2, 1);
+AudioConnection          patchCord33(multiply9, 0, mixer3, 0);
+AudioConnection          patchCord34(multiply11, 0, mixer3, 2);
+AudioConnection          patchCord35(multiply10, 0, mixer3, 1);
+AudioConnection          patchCord36(multiply12, 0, mixer3, 3);
+AudioConnection          patchCord37(mixer1, 0, mixer4, 0);
+AudioConnection          patchCord38(mixer2, 0, mixer4, 1);
 AudioConnection          patchCord39(mixer3, 0, mixer4, 2);
-AudioConnection          patchCord40(mixer4, 0, dac0, 0);
-AudioConnection          patchCord41(mixer4, 0, peak1, 0);
+AudioConnection          patchCord40(mixer4, dac0);
+AudioConnection          patchCord41(mixer4, peak1);
+// GUItool: end automatically generated code
+
 // GUItool: end automatically generated code
 
 
@@ -291,7 +298,7 @@ void loop() {
   else { voice1env8.amplitude(0.0, releaseTime); }
 
   if (artboard.touch(8) > 6000) { voice1env9.amplitude(1.0, attackTime); }
-  else { voice1env9.amplitude(0.0, releaseTime); }
+  else { voice1env9.amplitude(0.0, releaseTsime); }
 
   if (artboard.touch(9) > 6000) { voice1env10.amplitude(1.0, attackTime); }
   else { voice1env10.amplitude(0.0, releaseTime); }

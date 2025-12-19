@@ -185,6 +185,7 @@ void loop() {
   } else {
     voice1env1.amplitude(0.0, releaseTime); // Avvia il Rilascio
   }
+  
 
   // NOTA 1 (DO#)
   if (artboard.touch(1) > 6000) {
