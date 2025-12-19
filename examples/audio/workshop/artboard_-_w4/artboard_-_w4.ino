@@ -9,7 +9,6 @@ Hardware:
 - Touch (0-11): Suonano le 12 note
 - Pot 0:       Controlla l'Attack
 - Pot 1:       Controlla il Release
-- LED (Pin 29): Segue l'inviluppo audio (luminosità)
 
 by Daniele Murgia © 2019-20 MIT License
       sgtmurgia@gmail.com
@@ -178,133 +177,102 @@ void loop() {
   int attackTime  = map(artboard.pot(0), 0, 1023, 5, 1000);
   int releaseTime = map(artboard.pot(1), 0, 1023, 5, 1000);
 
-  // ----- LOGICA SEMPLIFICATA -----
-  //
-  // Questo codice è semplice e funziona perfettamente.
-  //
-  // Quando tieni premuto un tasto, il loop() chiama
-  // "voice1env.amplitude(1.0, attackTime)" migliaia di volte.
-  //
-  // La libreria Audio è "intelligente": capisce che le stai
-  // dando lo stesso comando (vai a 1.0) e quindi ignora
-  // i comandi duplicati, lasciando che il primo attacco
-  // si completi senza interruzioni.
-  //
-  // Reagisce solo quando riceve un *nuovo* comando
-  // (come "amplitude(0.0, releaseTime)" quando rilasci il tasto).
 
   // NOTA 0 (DO)
-  if (artboard.touch(0) > 8000) {
-    sine1.frequency(DO * 2);
+  if (artboard.touch(0) > 6000) {
+    sine1.frequency(DO );
     voice1env1.amplitude(1.0, attackTime); // Avvia l'Attacco
   } else {
     voice1env1.amplitude(0.0, releaseTime); // Avvia il Rilascio
   }
 
   // NOTA 1 (DO#)
-  if (artboard.touch(1) > 8000) {
-    sine2.frequency(DOd * 2);
+  if (artboard.touch(1) > 6000) {
+    sine2.frequency(DOd );
     voice1env2.amplitude(1.0, attackTime);
   } else {
     voice1env2.amplitude(0.0, releaseTime);
   }
 
   // NOTA 2 (RE)
-  if (artboard.touch(2) > 8000) {
-    sine3.frequency(RE * 2);
+  if (artboard.touch(2) > 6000) {
+    sine3.frequency(RE );
     voice1env3.amplitude(1.0, attackTime);
   } else {
     voice1env3.amplitude(0.0, releaseTime);
   }
 
   // NOTA 3 (RE#)
-  if (artboard.touch(3) > 8000) {
-    sine4.frequency(REd * 2);
+  if (artboard.touch(3) > 6000) {
+    sine4.frequency(REd );
     voice1env4.amplitude(1.0, attackTime);
   } else {
     voice1env4.amplitude(0.0, releaseTime);
   }
 
   // NOTA 4 (MI)
-  if (artboard.touch(4) > 8000) {
-    sine5.frequency(MI * 2);
+  if (artboard.touch(4) > 6000) {
+    sine5.frequency(MI );
     voice1env5.amplitude(1.0, attackTime);
   } else {
     voice1env5.amplitude(0.0, releaseTime);
   }
 
   // NOTA 5 (FA)
-  if (artboard.touch(5) > 8000) {
-    sine6.frequency(FA * 2);
+  if (artboard.touch(5) > 6000) {
+    sine6.frequency(FA );
     voice1env6.amplitude(1.0, attackTime);
   } else {
     voice1env6.amplitude(0.0, releaseTime);
   }
 
   // NOTA 6 (FA#)
-  if (artboard.touch(6) > 8000) {
-    sine7.frequency(FAd * 2);
+  if (artboard.touch(6) > 6000) {
+    sine7.frequency(FAd );
     voice1env7.amplitude(1.0, attackTime);
   } else {
     voice1env7.amplitude(0.0, releaseTime);
   }
 
   // NOTA 7 (SOL)
-  if (artboard.touch(7) > 8000) {
-    sine8.frequency(SOL * 2);
+  if (artboard.touch(7) > 6000) {
+    sine8.frequency(SOL );
     voice1env8.amplitude(1.0, attackTime);
   } else {
     voice1env8.amplitude(0.0, releaseTime);
   }
 
   // NOTA 8 (SOL#)
-  if (artboard.touch(8) > 8000) {
-    sine9.frequency(SOLd * 2);
+  if (artboard.touch(8) > 6000) {
+    sine9.frequency(SOLd);
     voice1env9.amplitude(1.0, attackTime);
   } else {
     voice1env9.amplitude(0.0, releaseTime);
   }
 
   // NOTA 9 (LA)
-  if (artboard.touch(9) > 8000) {
-    sine10.frequency(LA * 2);
+  if (artboard.touch(9) > 6000) {
+    sine10.frequency(LA );
     voice1env10.amplitude(1.0, attackTime);
   } else {
     voice1env10.amplitude(0.0, releaseTime);
   }
 
   // NOTA 10 (LA#)
-  if (artboard.touch(10) > 8000) {
-    sine11.frequency(LAd * 2);
+  if (artboard.touch(10) > 6000) {
+    sine11.frequency(LAd);
     voice1env11.amplitude(1.0, attackTime);
   } else {
     voice1env11.amplitude(0.0, releaseTime);
   }
 
   // NOTA 11 (SI)
-  if (artboard.touch(11) > 8000) {
-    sine12.frequency(SI * 2);
+  if (artboard.touch(11) > 6000) {
+    sine12.frequency(SI);
     voice1env12.amplitude(1.0, attackTime);
   } else {
     voice1env12.amplitude(0.0, releaseTime);
   }
   
-  
-  // === CONTROLLO LED ===
-  
-  // Controlliamo se l'analizzatore 'peak1' ha un nuovo valore
-  if (peak1.available()) {
-    // Leggi il livello del volume (un valore da 0.0 a 1.0)
-    float level = peak1.read();
-    
-    // Converti il livello in un valore di luminosità (0-255)
-    int brightness = (int)(level * 255.0);
-    
-    // Applica la luminosità al LED.
-    // Il LED ora seguirà perfettamente l'inviluppo audio,
-    // accendendosi con l'attacco e spegnendosi col rilascio.
-    analogWrite(led, brightness);
-  }
-
   delay(5); // Piccolo delay per stabilità
 }

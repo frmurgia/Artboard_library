@@ -1,45 +1,53 @@
 /*
 <><><><><><><><><><><><><><><><><><><>
 --------------------------------------
-Titolo progetto: Audio 7 - Polifonia + Ottave + Forme d'Onda + Filtro
-Descrizione:   Partiamo dallo Sketch 6 e aggiungiamo un FILTRO
-               per controllare il "tono" del suono.
-               Il filtro viene applicato dopo che tutte le 12 voci
-               sono state mixate insieme.
+Titolo progetto: Audio 7 - Synth Completo con Filtro e LFO
+Descrizione:   Questo è lo sketch completo! Combiniamo tutto:
+               1. Polysynth a 12 voci
+               2. Selettori di Ottava e Forma d'Onda (Pot 2, 3)
+               3. Inviluppo (Pot 0, 1)
+               4. Un Filtro per il "tono" (Pot 4)
+               5. Un LFO per modulare il filtro (Pot 5, 6)
 
 Hardware:
 - Touch (0-11): Suonano le 12 note
-- Pot 0:       Controlla l'Attack
-- Pot 1:       Controlla il Release
-- Pot 2:       Controlla l'Ottava (5 livelli)
-- Pot 3:       Controlla la Forma d'Onda (4 tipi)
-- Pot 4:       Controlla il Filtro Cutoff (frequenza/tono)
+- Pot 0:       Attack
+- Pot 1:       Release
+- Pot 2:       Ottava (5 livelli)
+- Pot 3:       Forma d'Onda oscillatori (4 tipi)
+- Pot 4:       Filtro Cutoff (frequenza/tono)
+- Pot 5:       Velocità dell'LFO (da 0.1 Hz a 10 Hz)
+- Pot 6:       Forma d'Onda dell'LFO (4 tipi)
 - LED (Pin 29): Segue l'inviluppo audio
 
 --------------------------------------
-LEZIONE: COS'È UN FILTRO?
+LEZIONE: COS'È UN LFO?
 --------------------------------------
-Un FILTRO è come un equalizzatore che lascia passare alcune
-frequenze e ne blocca altre. Il filtro che usiamo si chiama
-"Low-Pass Filter" (passa-basso) perché lascia passare le
-frequenze BASSE e attenua quelle ALTE.
+LFO significa "Low Frequency Oscillator" (Oscillatore a Bassa Frequenza).
+È un oscillatore come quelli che generano le note, ma molto più LENTO.
+Invece di generare un suono udibile (20-20000 Hz), l'LFO oscilla
+tra 0.1 e 10 Hz (da 1 volta ogni 10 secondi a 10 volte al secondo).
 
-CUTOFF FREQUENCY (Frequenza di Taglio):
-- È il punto dove il filtro inizia a tagliare le frequenze alte
-- Pot 4 tutto a sinistra (100 Hz) = suono molto scuro, ovattato
-- Pot 4 tutto a destra (12000 Hz) = suono brillante, completo
+COME FUNZIONA NEL NOSTRO SYNTH:
+L'LFO MODULA (cambia automaticamente) la frequenza del filtro,
+creando un effetto di "wobble" o "movimento" nel suono.
 
-RESONANCE (Risonanza):
-- Enfatizza le frequenze vicino al cutoff
-- Nel nostro sketch è FISSA a 2.0 (valore medio)
-- Valori più alti creano un suono più "nasale" o "resonante"
+Pot 5 - VELOCITÀ (Rate):
+- Sinistra (0.1 Hz): wobble molto lento
+- Destra (10 Hz): wobble veloce/vibrante
+
+Pot 6 - FORMA D'ONDA dell'LFO (diviso in 4 zone):
+- SINE: movimento morbido, arrotondato
+- SAWTOOTH: movimento ascendente lineare, ritorno brusco
+- SQUARE: salto improvviso tra due valori (on/off)
+- TRIANGLE: movimento su e giù lineare
 
 ARCHITETTURA DEL SEGNALE:
 12 Oscillatori → 12 Inviluppi (VCA) → 3 Mixer → 1 Mixer Finale
-→ FILTRO → DAC (uscita audio)
+→ FILTRO (modulato da LFO) → DAC (uscita audio)
+         ↑
+      LFO (modula il cutoff del filtro)
 
-Il filtro è l'ULTIMO stadio prima dell'uscita, così modifica
-il suono di tutte le voci contemporaneamente.
 --------------------------------------
 
 by Daniele Murgia © 2019-20 MIT License
@@ -56,50 +64,53 @@ by Daniele Murgia © 2019-20 MIT License
 #include <Artboard.h>
 Artboard artboard;
 
+
 // GUItool: begin automatically generated code
-AudioSynthWaveform       waveform4;      //xy=406,479
-AudioSynthWaveformDc     voice1env4;     //xy=409,511
-AudioSynthWaveformDc     voice1env3;     //xy=411,438
-AudioSynthWaveformDc     voice1env2;     //xy=412,375
-AudioSynthWaveform       waveform2;      //xy=414,344
-AudioSynthWaveformDc     voice1env12;    //xy=411,1147
-AudioSynthWaveform       waveform3;      //xy=414,410
-AudioSynthWaveformDc     voice1env1;     //xy=416,306
-AudioSynthWaveformDc     voice1env8;     //xy=415,843
-AudioSynthWaveform       waveform12;     //xy=414,1112
-AudioSynthWaveform       waveform1;      //xy=418,272
-AudioSynthWaveformDc     voice1env9;     //xy=416,935
-AudioSynthWaveformDc     voice1env10;    //xy=416,1005
-AudioSynthWaveform       waveform10;     //xy=417,970
-AudioSynthWaveformDc     voice1env11;    //xy=418,1075
-AudioSynthWaveform       waveform9;      //xy=420,901
-AudioSynthWaveform       waveform11;     //xy=420,1041
-AudioSynthWaveformDc     voice1env7;     //xy=422,764
-AudioSynthWaveform       waveform8;      //xy=422,808
-AudioSynthWaveform       waveform7;      //xy=423,729
-AudioSynthWaveformDc     voice1env6;     //xy=426,688
-AudioSynthWaveformDc     voice1env5;     //xy=428,619
-AudioSynthWaveform       waveform6;      //xy=428,655
-AudioSynthWaveform       waveform5;      //xy=431,585
-AudioEffectMultiply      multiply3;      //xy=603,412
-AudioEffectMultiply      multiply2;      //xy=604,381
-AudioEffectMultiply      multiply4;      //xy=607,442
-AudioEffectMultiply      multiply1;      //xy=609,348
-AudioEffectMultiply      multiply8;      //xy=619,813
-AudioEffectMultiply      multiply6;      //xy=622,657
-AudioEffectMultiply      multiply7;      //xy=624,759
-AudioEffectMultiply      multiply5;      //xy=626,593
-AudioEffectMultiply      multiply12;     //xy=648,1103
-AudioEffectMultiply      multiply10;     //xy=649,1043
-AudioEffectMultiply      multiply11;     //xy=650,1075
-AudioEffectMultiply      multiply9;      //xy=651,1013
-AudioMixer4              mixer3;         //xy=813,1035
-AudioMixer4              mixer1;         //xy=821,371
-AudioMixer4              mixer2;         //xy=834,660
-AudioMixer4              mixer4;         //xy=1063,664
-AudioFilterStateVariable filter1;        //xy=1200,664
-AudioAnalyzePeak         peak1;          //xy=1341,691
-AudioOutputAnalog        dac0;           //xy=1342,631
+// --- ARCHITETTURA COMPLETA CON FILTRO E LFO ---
+AudioSynthWaveform       waveform4;
+AudioSynthWaveformDc     voice1env4;
+AudioSynthWaveformDc     voice1env3;
+AudioSynthWaveformDc     voice1env2;
+AudioSynthWaveform       waveform2;
+AudioSynthWaveformDc     voice1env12;
+AudioSynthWaveform       waveform3;
+AudioSynthWaveformDc     voice1env1;
+AudioSynthWaveformDc     voice1env8;
+AudioSynthWaveform       waveform12;
+AudioSynthWaveform       waveform1;
+AudioSynthWaveformDc     voice1env9;
+AudioSynthWaveformDc     voice1env10;
+AudioSynthWaveform       waveform10;
+AudioSynthWaveformDc     voice1env11;
+AudioSynthWaveform       waveform9;
+AudioSynthWaveform       waveform11;
+AudioSynthWaveformDc     voice1env7;
+AudioSynthWaveform       waveform8;
+AudioSynthWaveform       waveform7;
+AudioSynthWaveformDc     voice1env6;
+AudioSynthWaveformDc     voice1env5;
+AudioSynthWaveform       waveform6;
+AudioSynthWaveform       waveform5;
+AudioEffectMultiply      multiply3;
+AudioEffectMultiply      multiply2;
+AudioEffectMultiply      multiply4;
+AudioEffectMultiply      multiply1;
+AudioEffectMultiply      multiply8;
+AudioEffectMultiply      multiply6;
+AudioEffectMultiply      multiply7;
+AudioEffectMultiply      multiply5;
+AudioEffectMultiply      multiply12;
+AudioEffectMultiply      multiply10;
+AudioEffectMultiply      multiply11;
+AudioEffectMultiply      multiply9;
+AudioMixer4              mixer3;
+AudioMixer4              mixer1;
+AudioMixer4              mixer2;
+AudioMixer4              mixer4;           // Mixer finale
+AudioSynthWaveform       lfo1;             // <-- NOVITÀ: L'LFO
+AudioFilterStateVariable filter1;          // Filtro con modulazione LFO
+AudioAnalyzePeak         peak1;
+AudioOutputAnalog        dac0;
 AudioConnection          patchCord1(waveform4, 0, multiply4, 0);
 AudioConnection          patchCord2(voice1env4, 0, multiply4, 1);
 AudioConnection          patchCord3(voice1env3, 0, multiply3, 1);
@@ -139,11 +150,12 @@ AudioConnection          patchCord36(multiply9, 0, mixer3, 0);
 AudioConnection          patchCord37(mixer3, 0, mixer4, 2);
 AudioConnection          patchCord38(mixer1, 0, mixer4, 0);
 AudioConnection          patchCord39(mixer2, 0, mixer4, 1);
-AudioConnection          patchCord40(mixer4, 0, filter1, 0);
-AudioConnection          patchCord41(filter1, 0, dac0, 0);
-AudioConnection          patchCord42(filter1, 0, peak1, 0);
+// --- CATENA SEGNALE CON LFO ---
+AudioConnection          patchCord40(mixer4, 0, filter1, 0);  // Audio → Filtro (Input 0)
+AudioConnection          patchCord41(lfo1, 0, filter1, 1);    // LFO → Filtro (Input 1, Modulazione)
+AudioConnection          patchCord42(filter1, 0, dac0, 0);    // Filtro → DAC
+AudioConnection          patchCord43(filter1, 0, peak1, 0);   // Filtro → Peak (LED)
 // GUItool: end automatically generated code
-
 
 
 int led = 29; // Pin del LED
@@ -151,6 +163,7 @@ int led = 29; // Pin del LED
 // Variabili per tenere traccia degli stati precedenti
 int lastOctave = -1;
 int lastWaveform = -1;
+int lastLfoWaveform = -1;
 
 // Note (Frequenze di base, divise per 4 per avere margine verso l'alto)
 float DO    = 261.6 / 4;
@@ -171,7 +184,7 @@ float SI    = 493.9 / 4;
 
 void setup() {
   pinMode(led, OUTPUT); 
-  AudioMemory(64);  // Aumentato per il filtro
+  AudioMemory(64);  // Aumentato per filtro + LFO
   Serial.begin(9600);
   
   // Inizializza tutti gli inviluppi a 0 (silenzio)
@@ -209,14 +222,20 @@ void setup() {
   mixer4.gain(0, .33); mixer4.gain(1, .33); mixer4.gain(2, .33);
   
   // --- IMPOSTAZIONI INIZIALI FILTRO ---
-  // Resonance fissa a 2.0 (valore medio)
-  filter1.resonance(2.0);
+  filter1.resonance(2.0);           // Resonance fissa a 2.0
+  filter1.octaveControl(2.0);       // Quantità di modulazione dell'LFO (2 ottave)
   
-  Serial.println("Sketch 7: Ottave + Forme d'Onda + Filtro");
-  Serial.println("Pot 2: Controlla l'ottava (5 livelli)");
-  Serial.println("Pot 3: Controlla la forma d'onda (4 tipi)");
-  Serial.println("Pot 4: Controlla il filtro cutoff (tono)");
+  // --- IMPOSTAZIONI INIZIALI LFO ---
+  lfo1.begin(1.0, 1.0, WAVEFORM_SINE);  // Ampiezza 1.0, Frequenza 1 Hz, Forma SINE
+  
+  Serial.println("Sketch 7: Synth Completo con Filtro e LFO");
+  Serial.println("Pot 2: Ottava (5 livelli)");
+  Serial.println("Pot 3: Forma d'onda oscillatori (4 tipi)");
+  Serial.println("Pot 4: Filtro cutoff");
+  Serial.println("Pot 5: Velocità LFO (0.1-10 Hz)");
+  Serial.println("Pot 6: Forma d'onda LFO (4 tipi)");
   Serial.println("Resonance: Fissa a 2.0");
+  Serial.println("LFO Depth: Fissa a 2 ottave");
 }
 
 
@@ -228,10 +247,12 @@ void loop() {
   int attackTime  = map(artboard.pot(0), 0, 1023, 5, 1000);
   int releaseTime = map(artboard.pot(1), 0, 1023, 5, 1000);
   
-  // Leggi i potenziometri per ottava, forma d'onda e filtro
+  // Leggi i potenziometri per ottava, forma d'onda, filtro e LFO
   int potOctave = artboard.pot(2);
   int potWaveform = artboard.pot(3);
   int potFilter = artboard.pot(4);
+  int potLfoRate = artboard.pot(5);
+  int potLfoWaveform = artboard.pot(6);
 
 
   // --- 2. DETERMINA L'OTTAVA IN BASE ALLA POSIZIONE DEL POT 2 ---
@@ -255,7 +276,7 @@ void loop() {
   }
   
   
-  // --- 3. DETERMINA LA FORMA D'ONDA IN BASE ALLA POSIZIONE DEL POT 3 ---
+  // --- 3. DETERMINA LA FORMA D'ONDA OSCILLATORI IN BASE AL POT 3 ---
   
   int currentWaveform;
   
@@ -274,22 +295,46 @@ void loop() {
   
   
   // --- 4. CONTROLLO FILTRO (POT 4) ---
-
+  //
+  // Il filtro viene aggiornato continuamente per permettere
+  // un controllo espressivo in tempo reale
   
-  // Mappa il pot 4 sulla frequenza di taglio (da 100 Hz a 12000 Hz)
   float filterFreq = map(potFilter, 0, 1023, 100, 12000);
-  
-  // Applica la frequenza al filtro
   filter1.frequency(filterFreq);
-  // La resonance rimane fissa a 2.0 (impostata nel setup)
   
   
-  // --- 5. APPLICA LA NUOVA OTTAVA (solo se è cambiata) ---
+  // --- 5. CONTROLLO LFO RATE (POT 5) ---
+  //
+  // La velocità dell'LFO viene aggiornata continuamente
+  // Range: da 0.1 Hz (molto lento) a 10 Hz (veloce)
+  
+  float lfoRate = map(potLfoRate, 0, 1023, 1, 100) / 10.0;  // Da 0.1 a 10.0 Hz
+  lfo1.frequency(lfoRate);
+  
+  
+  // --- 6. DETERMINA LA FORMA D'ONDA DELL'LFO (POT 6) ---
+  
+  int currentLfoWaveform;
+  
+  if (potLfoWaveform < 256) {
+    currentLfoWaveform = WAVEFORM_SINE;
+  }
+  else if (potLfoWaveform < 512) {
+    currentLfoWaveform = WAVEFORM_SAWTOOTH;
+  }
+  else if (potLfoWaveform < 768) {
+    currentLfoWaveform = WAVEFORM_SQUARE;
+  }
+  else {
+    currentLfoWaveform = WAVEFORM_TRIANGLE;
+  }
+  
+  
+  // --- 7. APPLICA LA NUOVA OTTAVA (solo se è cambiata) ---
   
   if (currentOctave != lastOctave) {
     Serial.print("Ottava: "); Serial.println(currentOctave);
     
-    // Applica la nuova ottava a tutte le 12 voci
     waveform1.frequency(DO * currentOctave);
     waveform2.frequency(DOd * currentOctave);
     waveform3.frequency(RE * currentOctave);
@@ -307,11 +352,10 @@ void loop() {
   }
   
   
-  // --- 6. APPLICA LA NUOVA FORMA D'ONDA (solo se è cambiata) ---
+  // --- 8. APPLICA LA NUOVA FORMA D'ONDA OSCILLATORI (solo se è cambiata) ---
   
   if (currentWaveform != lastWaveform) {
-    // Stampa il nome della forma d'onda
-    Serial.print("Forma d'onda: ");
+    Serial.print("Forma d'onda oscillatori: ");
     
     if (currentWaveform == WAVEFORM_SINE) {
       Serial.println("SINE");
@@ -326,7 +370,6 @@ void loop() {
       Serial.println("TRIANGLE");
     }
     
-    // Applica la nuova forma d'onda a tutte le 12 voci
     waveform1.begin(1.0, DO * currentOctave, currentWaveform);
     waveform2.begin(1.0, DOd * currentOctave, currentWaveform);
     waveform3.begin(1.0, RE * currentOctave, currentWaveform);
@@ -342,9 +385,34 @@ void loop() {
     
     lastWaveform = currentWaveform;
   }
+  
+  
+  // --- 9. APPLICA LA NUOVA FORMA D'ONDA DELL'LFO (solo se è cambiata) ---
+  
+  if (currentLfoWaveform != lastLfoWaveform) {
+    Serial.print("Forma d'onda LFO: ");
+    
+    if (currentLfoWaveform == WAVEFORM_SINE) {
+      Serial.println("SINE");
+    }
+    else if (currentLfoWaveform == WAVEFORM_SAWTOOTH) {
+      Serial.println("SAWTOOTH");
+    }
+    else if (currentLfoWaveform == WAVEFORM_SQUARE) {
+      Serial.println("SQUARE");
+    }
+    else if (currentLfoWaveform == WAVEFORM_TRIANGLE) {
+      Serial.println("TRIANGLE");
+    }
+    
+    // Cambia la forma d'onda dell'LFO mantenendo ampiezza e frequenza
+    lfo1.begin(1.0, lfoRate, currentLfoWaveform);
+    
+    lastLfoWaveform = currentLfoWaveform;
+  }
 
 
-  // --- 7. LOGICA NOTE (Touch) ---
+  // --- 10. LOGICA NOTE (Touch) ---
 
   if (artboard.touch(0) > 6000) { voice1env1.amplitude(1.0, attackTime); }
   else { voice1env1.amplitude(0.0, releaseTime); }
@@ -382,6 +450,13 @@ void loop() {
   if (artboard.touch(11) > 6000) { voice1env12.amplitude(1.0, attackTime); }
   else { voice1env12.amplitude(0.0, releaseTime); }
   
- 
+  
+  // --- 11. CONTROLLO LED ---
+  if (peak1.available()) {
+    float level = peak1.read();
+    int brightness = (int)(level * 255.0);
+    analogWrite(led, brightness);
+  }
+
   delay(5);
 }

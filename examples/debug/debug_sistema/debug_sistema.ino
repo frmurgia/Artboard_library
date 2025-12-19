@@ -1,40 +1,80 @@
 /*
-  Blink
-
-  Turns an LED on for one second, then off for one second, repeatedly.
-
-  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino
-  model, check the Technical Specs of your board at:
-  https://www.arduino.cc/en/Main/Products
-
-  modified 8 May 2014
-  by Scott Fitzgerald
-  modified 2 Sep 2016
-  by Arturo Guadalupi
-  modified 8 Sep 2016
-  by Colby Newman
-
-  This example code is in the public domain.
-
-  http://www.arduino.cc/en/Tutorial/Blink
+  DEBUG TOTALE ARTBOARD
+  Combina test per: Potenziometri (0-7), Bottoni (0-7) e Touch (0-11).
 */
-intled=12; // variabile intera
 
-// the setup function runs once when you press reset or power the board
+#include <Artboard.h> // [cite: 4, 14, 24]
+
+Artboard artboard; // Creazione oggetto artboard [cite: 5, 16, 25]
+
+// Soglia per il sensore capacitivo 
+const int SOGLIA_TOUCH = 7000; 
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinmode(ed, OUTPUT);
-  Serialbegin(9600);
-  Serial.println("Setup concluso");
+  Serial.begin(9600); // [cite: 6, 16, 26]
+  Serial.println("--- AVVIO DEBUG COMPLETO ARTBOARD ---");
+  Serial.println("Leggo: 8 Potenziometri, 8 Bottoni, 12 Touch");
+  delay(1000);
 }
 
-// the loop function runs over and over again forever
-void loop() 
-  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(l000)                      // wait for a second
-  digitalWrite(Led, LOW);    // turn the LED off by making the voltage LOW
-  delay(l000);                       // wait for a second
+void loop() {
+  Serial.println("\n\n=== 1. POTENZIOMETRI (0-7) ===");
+  // Ciclo lettura 8 potenziometri [cite: 23]
+  for (int i = 0; i < 8; i++) {
+    int valPot = artboard.pot(i); // Lettura valore 0-1023 
+    
+    Serial.print("Pot ");
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.print(valPot);
+    Serial.print("\t"); // Tabulazione per formattazione
+    
+    // A capo ogni 4 potenziometri per ordine visivo
+    if ((i + 1) % 4 == 0) Serial.println(); 
+  }
+
+  Serial.println("\n=== 2. BOTTONI (0-7) ===");
+  // Ciclo lettura 8 bottoni [cite: 14]
+  for (int i = 0; i < 8; i++) {
+    int statoBtn = artboard.button(i); // Legge 0 o 1 
+    
+    Serial.print("Btn ");
+    Serial.print(i);
+    Serial.print(": ");
+    
+    // NOTA: Basato sulla documentazione, 0 (LOW) è PREMUTO.
+    if (statoBtn == 0) {
+      Serial.print("PREMUTO (0)"); 
+    } else {
+      Serial.print("- (1)");
+    }
+    Serial.print("\t");
+    
+    if ((i + 1) % 4 == 0) Serial.println();
+  }
+
+  Serial.println("\n=== 3. TOUCH (0-11) ===");
+  // Ciclo lettura 12 sensori touch [cite: 1]
+  for (int i = 0; i < 12; i++) {
+    int valTouch = artboard.touch(i); // Valore grezzo [cite: 2]
+    
+    Serial.print("T");
+    Serial.print(i);
+    Serial.print(":");
+    Serial.print(valTouch);
+    
+    // Controllo soglia tocco 
+    if (valTouch > SOGLIA_TOUCH) {
+      Serial.print("*ON*");
+    } else {
+      Serial.print("    ");
+    }
+    Serial.print("\t");
+    
+    // A capo ogni 4 sensori
+    if ((i + 1) % 4 == 0) Serial.println();
+  }
+
+  Serial.println("------------------------------------------------");
+  delay(800); // Pausa per permettere la lettura dei dati [cite: 13, 22, 30]
 }

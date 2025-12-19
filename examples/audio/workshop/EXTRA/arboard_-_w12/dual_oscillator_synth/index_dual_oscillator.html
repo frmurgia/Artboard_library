@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>futura Audio Workshop - Demo Interattiva</title>
+    <title>futura Audio Workshop - Dual Oscillator Synth</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom font for titles - replace with your .ttf font file */
         @font-face {
             font-family: 'CustomTitleFont';
             src: url('font/ProtoMono-Regular.ttf') format('truetype');
@@ -35,7 +34,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -97,11 +96,16 @@
             font-weight: 500;
         }
 
+        .value-display {
+            float: right;
+            font-weight: 700;
+        }
+
         .slider-control input[type="range"] {
             width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: #E8F0F2;
+            height: 8px;
+            border-radius: 4px;
+            background: #E8EEF7;
             outline: none;
             -webkit-appearance: none;
         }
@@ -109,53 +113,44 @@
         .slider-control input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #4A57F9;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(74, 87, 249, 0.4);
         }
 
         .slider-control input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #4A57F9;
             cursor: pointer;
             border: none;
-            box-shadow: 0 2px 6px rgba(74, 87, 249, 0.4);
-        }
-
-        .value-display {
-            display: inline-block;
-            float: right;
-            color: #4A57F9;
-            font-weight: 700;
         }
 
         .button-group {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .btn {
-            flex: 1;
             padding: 12px;
-            background: #FFFFFF;
-            border: 2px solid rgba(74, 87, 249, 0.3);
-            /* border-radius: 8px; */
+            background: #E8EEF7;
+            border: 2px solid #E8EEF7;
+            border-radius: 8px;
             color: #4A57F9;
+            font-size: 1em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.95em;
             font-family: 'Roboto Mono', monospace;
-            font-weight: 500;
         }
 
         .btn:hover {
-            background: #E8F0F2;
+            background: #D0D9EE;
             border-color: #4A57F9;
         }
 
@@ -163,20 +158,19 @@
             background: #4A57F9;
             border-color: #4A57F9;
             color: #FFFFFF;
-            font-weight: 700;
         }
 
         .keyboard {
             background: #FFFFFF;
             border: 2px solid rgba(74, 87, 249, 0.3);
-            /* border-radius: 12px; */
-            padding: 30px 20px;
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 20px;
         }
 
         .keyboard h3 {
             color: #4A57F9;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
             font-weight: 700;
         }
@@ -185,15 +179,13 @@
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             gap: 8px;
-            max-width: 900px;
-            margin: 0 auto;
         }
 
         .key {
             aspect-ratio: 1;
             background: #FFFFFF;
-            border: 2px solid rgba(74, 87, 249, 0.4);
-            /* border-radius: 8px; */
+            border: 2px solid #E8EEF7;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -294,10 +286,10 @@
 <body>
     <div class="container">
         <h1>futura Audio Workshop</h1>
-        <p class="subtitle">Demo Interattiva - Polysynth con Filtro e LFO</p>
+        <p class="subtitle">Demo Interattiva - Dual Oscillator Polysynth</p>
 
         <div class="info-panel">
-            <p>Questa è una replica web della patch futura Audio che costruirai nel workshop!</p>
+            <p>Replica web completa del Dual Oscillator Synth!</p>
             <p><strong>Clicca "Avvia Synth"</strong> per iniziare, poi suona le note con mouse/touch o tastiera</p>
         </div>
 
@@ -322,6 +314,17 @@
                     </div>
                 </div>
 
+                <!-- Mix Control -->
+                <div class="control-section">
+                    <h3>Mix Oscillatori</h3>
+                    <div class="slider-control">
+                        <label>
+                            Osc1 ↔ Osc2 <span class="value-display" id="mixValue">50%</span>
+                        </label>
+                        <input type="range" id="mix" min="0" max="100" value="50">
+                    </div>
+                </div>
+
                 <!-- Filter Controls -->
                 <div class="control-section">
                     <h3>Filtro (Filter)</h3>
@@ -331,12 +334,6 @@
                         </label>
                         <input type="range" id="cutoff" min="100" max="12000" value="2000">
                     </div>
-                    <div class="slider-control">
-                        <label>
-                            Resonance <span class="value-display" id="resonanceValue">1.0</span>
-                        </label>
-                        <input type="range" id="resonance" min="7" max="50" value="10">
-                    </div>
                 </div>
 
                 <!-- LFO Controls -->
@@ -344,44 +341,78 @@
                     <h3>LFO (Modulazione)</h3>
                     <div class="slider-control">
                         <label>
-                            Rate (Velocità) <span class="value-display" id="lfoRateValue">1.0Hz</span>
+                            Rate <span class="value-display" id="lfoRateValue">1.0Hz</span>
                         </label>
                         <input type="range" id="lfoRate" min="1" max="100" value="10">
                     </div>
                     <div class="slider-control">
                         <label>
-                            Depth (Intensità) <span class="value-display" id="lfoDepthValue">0.0</span>
+                            Depth <span class="value-display" id="lfoDepthValue">2.0</span>
                         </label>
-                        <input type="range" id="lfoDepth" min="0" max="50" value="0">
+                        <input type="range" id="lfoDepth" min="0" max="50" value="20">
                     </div>
                 </div>
             </div>
 
             <div class="controls-grid">
-                <!-- Waveform Selector -->
+                <!-- Oscillator 1 Controls -->
                 <div class="control-section">
-                    <h3>Forma d'Onda</h3>
+                    <h3>Oscillatore 1</h3>
                     <div class="button-group">
-                        <button class="btn active" data-wave="sine">Sine</button>
-                        <button class="btn" data-wave="sawtooth">Saw</button>
+                        <button class="btn active" data-osc="1" data-wave="sine">Sine</button>
+                        <button class="btn" data-osc="1" data-wave="sawtooth">Saw</button>
                     </div>
                     <div class="button-group">
-                        <button class="btn" data-wave="square">Square</button>
-                        <button class="btn" data-wave="triangle">Triangle</button>
+                        <button class="btn" data-osc="1" data-wave="square">Square</button>
+                        <button class="btn" data-osc="1" data-wave="triangle">Triangle</button>
+                    </div>
+                    <div class="button-group" style="margin-top: 10px;">
+                        <button class="btn" data-osc="1" data-octave="1">Oct 1</button>
+                        <button class="btn" data-osc="1" data-octave="2">Oct 2</button>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn active" data-osc="1" data-octave="4">Oct 4</button>
+                        <button class="btn" data-osc="1" data-octave="8">Oct 8</button>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn" data-osc="1" data-octave="16">Oct 16</button>
                     </div>
                 </div>
 
-                <!-- Octave Selector -->
+                <!-- Oscillator 2 Controls -->
                 <div class="control-section">
-                    <h3>Ottava</h3>
+                    <h3>Oscillatore 2</h3>
                     <div class="button-group">
-                        <button class="btn" data-octave="1">1</button>
-                        <button class="btn" data-octave="2">2</button>
-                        <button class="btn active" data-octave="4">4</button>
+                        <button class="btn" data-osc="2" data-wave="sine">Sine</button>
+                        <button class="btn active" data-osc="2" data-wave="sawtooth">Saw</button>
                     </div>
                     <div class="button-group">
-                        <button class="btn" data-octave="8">8</button>
-                        <button class="btn" data-octave="16">16</button>
+                        <button class="btn" data-osc="2" data-wave="square">Square</button>
+                        <button class="btn" data-osc="2" data-wave="triangle">Triangle</button>
+                    </div>
+                    <div class="button-group" style="margin-top: 10px;">
+                        <button class="btn" data-osc="2" data-octave="1">Oct 1</button>
+                        <button class="btn" data-osc="2" data-octave="2">Oct 2</button>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn active" data-osc="2" data-octave="4">Oct 4</button>
+                        <button class="btn" data-osc="2" data-octave="8">Oct 8</button>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn" data-osc="2" data-octave="16">Oct 16</button>
+                    </div>
+                </div>
+
+                <!-- LFO Waveform Control -->
+                <div class="control-section">
+                    <h3>LFO Forma d'Onda</h3>
+                    <div class="button-group">
+                        <button class="btn active" data-lfo-wave="sine">Sine</button>
+                        <button class="btn" data-lfo-wave="sawtooth">Saw</button>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn" data-lfo-wave="square">Square</button>
+                        <button class="btn" data-lfo-wave="triangle">Triangle</button>
                     </div>
                 </div>
             </div>
@@ -441,7 +472,7 @@
             </div>
 
             <div class="visualizer">
-                <h3>Visualizzazione Audio</h3>
+                <h3>Oscilloscopio</h3>
                 <canvas id="oscilloscope"></canvas>
             </div>
         </div>
@@ -455,31 +486,26 @@
         let filter;
         let lfo;
         let lfoGain;
+        let mixer1, mixer2;
         
         // Synth state
-        let currentWaveform = 'sine';
-        let currentOctave = 4;
+        let osc1Waveform = 'sine';
+        let osc1Octave = 4;
+        let osc2Waveform = 'sawtooth';
+        let osc2Octave = 4;
+        let lfoWaveform = 'sine';
         let attackTime = 0.1;
         let releaseTime = 0.2;
+        let mixValue = 0.5; // 0=100% osc1, 1=100% osc2
         
         // Active voices (polysynth)
         const voices = {};
-        const MAX_VOICES = 12;
         
-        // Note frequencies (base values divided by 4, like in futura code)
+        // Note frequencies (base values divided by 4)
         const baseFrequencies = [
-            261.6 / 4,  // C
-            277.2 / 4,  // C#
-            293.7 / 4,  // D
-            311.1 / 4,  // D#
-            329.6 / 4,  // E
-            349.2 / 4,  // F
-            370.0 / 4,  // F#
-            392.0 / 4,  // G
-            415.3 / 4,  // G#
-            440.0 / 4,  // A
-            466.2 / 4,  // A#
-            493.9 / 4   // B
+            261.6 / 4, 277.2 / 4, 293.7 / 4, 311.1 / 4,
+            329.6 / 4, 349.2 / 4, 370.0 / 4, 392.0 / 4,
+            415.3 / 4, 440.0 / 4, 466.2 / 4, 493.9 / 4
         ];
 
         // Keyboard mapping
@@ -496,11 +522,17 @@
             masterGain = audioContext.createGain();
             masterGain.gain.value = 0.3;
             
+            // Mixer gains for two oscillators
+            mixer1 = audioContext.createGain();
+            mixer2 = audioContext.createGain();
+            mixer1.gain.value = 0.5; // 50% osc1
+            mixer2.gain.value = 0.5; // 50% osc2
+            
             // Filter
             filter = audioContext.createBiquadFilter();
             filter.type = 'lowpass';
             filter.frequency.value = 2000;
-            filter.Q.value = 1.0;
+            filter.Q.value = 2.0;
             
             // LFO for filter modulation
             lfo = audioContext.createOscillator();
@@ -508,7 +540,7 @@
             lfo.frequency.value = 1.0;
             
             lfoGain = audioContext.createGain();
-            lfoGain.gain.value = 0; // Start with no modulation
+            lfoGain.gain.value = 1000; // Default depth (2 ottave * 500)
             
             lfo.connect(lfoGain);
             lfoGain.connect(filter.frequency);
@@ -518,7 +550,9 @@
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 2048;
             
-            // Audio chain: voices -> filter -> analyser -> masterGain -> destination
+            // Audio chain: mixer1/mixer2 -> filter -> analyser -> masterGain -> destination
+            mixer1.connect(filter);
+            mixer2.connect(filter);
             filter.connect(analyser);
             analyser.connect(masterGain);
             masterGain.connect(audioContext.destination);
@@ -547,18 +581,19 @@
                 document.getElementById('releaseValue').textContent = e.target.value + 'ms';
             });
             
+            // Mix slider
+            document.getElementById('mix').addEventListener('input', (e) => {
+                mixValue = parseInt(e.target.value) / 100;
+                mixer1.gain.value = 1.0 - mixValue;
+                mixer2.gain.value = mixValue;
+                document.getElementById('mixValue').textContent = e.target.value + '%';
+            });
+            
             // Filter Cutoff
             document.getElementById('cutoff').addEventListener('input', (e) => {
                 const freq = parseInt(e.target.value);
                 filter.frequency.value = freq;
                 document.getElementById('cutoffValue').textContent = freq + 'Hz';
-            });
-            
-            // Filter Resonance
-            document.getElementById('resonance').addEventListener('input', (e) => {
-                const res = parseInt(e.target.value) / 10.0;
-                filter.Q.value = res;
-                document.getElementById('resonanceValue').textContent = res.toFixed(1);
             });
             
             // LFO Rate
@@ -571,26 +606,54 @@
             // LFO Depth
             document.getElementById('lfoDepth').addEventListener('input', (e) => {
                 const depth = parseInt(e.target.value) / 10.0;
-                // Convert octave control to frequency modulation amount
-                const modulationAmount = depth * 500; // Scale factor
+                const modulationAmount = depth * 500;
                 lfoGain.gain.value = modulationAmount;
                 document.getElementById('lfoDepthValue').textContent = depth.toFixed(1);
             });
             
-            // Waveform buttons
-            document.querySelectorAll('[data-wave]').forEach(btn => {
+            // Oscillator 1 Waveform buttons
+            document.querySelectorAll('[data-osc="1"][data-wave]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    currentWaveform = btn.dataset.wave;
-                    document.querySelectorAll('[data-wave]').forEach(b => b.classList.remove('active'));
+                    osc1Waveform = btn.dataset.wave;
+                    document.querySelectorAll('[data-osc="1"][data-wave]').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 });
             });
             
-            // Octave buttons
-            document.querySelectorAll('[data-octave]').forEach(btn => {
+            // Oscillator 1 Octave buttons
+            document.querySelectorAll('[data-osc="1"][data-octave]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    currentOctave = parseInt(btn.dataset.octave);
-                    document.querySelectorAll('[data-octave]').forEach(b => b.classList.remove('active'));
+                    osc1Octave = parseInt(btn.dataset.octave);
+                    document.querySelectorAll('[data-osc="1"][data-octave]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
+            // Oscillator 2 Waveform buttons
+            document.querySelectorAll('[data-osc="2"][data-wave]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    osc2Waveform = btn.dataset.wave;
+                    document.querySelectorAll('[data-osc="2"][data-wave]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
+            // Oscillator 2 Octave buttons
+            document.querySelectorAll('[data-osc="2"][data-octave]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    osc2Octave = parseInt(btn.dataset.octave);
+                    document.querySelectorAll('[data-osc="2"][data-octave]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
+            // LFO Waveform buttons
+            document.querySelectorAll('[data-lfo-wave]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    lfoWaveform = btn.dataset.lfoWave;
+                    // Restart LFO with new waveform
+                    lfo.type = lfoWaveform;
+                    document.querySelectorAll('[data-lfo-wave]').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 });
             });
@@ -630,33 +693,49 @@
         }
 
         function noteOn(noteIndex) {
-            if (voices[noteIndex]) return; // Already playing
+            if (voices[noteIndex]) return;
             
             const now = audioContext.currentTime;
-            const frequency = baseFrequencies[noteIndex] * currentOctave;
+            const baseFreq = baseFrequencies[noteIndex];
+            const freq1 = baseFreq * osc1Octave;
+            const freq2 = baseFreq * osc2Octave;
             
-            // Create oscillator
-            const osc = audioContext.createOscillator();
-            osc.type = currentWaveform;
-            osc.frequency.value = frequency;
+            // Create Oscillator 1
+            const osc1 = audioContext.createOscillator();
+            osc1.type = osc1Waveform;
+            osc1.frequency.value = freq1;
             
-            // Create envelope (gain node)
+            // Create Oscillator 2
+            const osc2 = audioContext.createOscillator();
+            osc2.type = osc2Waveform;
+            osc2.frequency.value = freq2;
+            
+            // Create envelope (shared between both oscillators)
             const envelope = audioContext.createGain();
             envelope.gain.setValueAtTime(0, now);
             envelope.gain.linearRampToValueAtTime(1.0, now + attackTime);
             
-            // Connect: osc -> envelope -> filter
-            osc.connect(envelope);
-            envelope.connect(filter);
+            // Connect: osc1 -> envelope -> mixer1
+            //          osc2 -> envelope -> mixer2
+            const env1 = audioContext.createGain();
+            const env2 = audioContext.createGain();
             
-            osc.start(now);
+            osc1.connect(env1);
+            env1.connect(envelope);
+            envelope.connect(mixer1);
+            
+            osc2.connect(env2);
+            env2.connect(envelope);
+            envelope.connect(mixer2);
+            
+            osc1.start(now);
+            osc2.start(now);
             
             // Store voice
-            voices[noteIndex] = { osc, envelope };
+            voices[noteIndex] = { osc1, osc2, envelope, env1, env2 };
             
             // Visual feedback
-            const keyElement = document.querySelector(`[data-note="${noteIndex}"]`);
-            if (keyElement) keyElement.classList.add('playing');
+            document.querySelector(`[data-note="${noteIndex}"]`).classList.add('playing');
         }
 
         function noteOff(noteIndex) {
@@ -670,58 +749,58 @@
             voice.envelope.gain.setValueAtTime(voice.envelope.gain.value, now);
             voice.envelope.gain.linearRampToValueAtTime(0, now + releaseTime);
             
-            // Stop oscillator after release
-            voice.osc.stop(now + releaseTime + 0.1);
+            // Stop oscillators after release
+            voice.osc1.stop(now + releaseTime + 0.1);
+            voice.osc2.stop(now + releaseTime + 0.1);
             
             // Clean up
             setTimeout(() => {
                 delete voices[noteIndex];
-            }, (releaseTime + 0.1) * 1000);
+            }, (releaseTime + 0.2) * 1000);
             
             // Visual feedback
-            const keyElement = document.querySelector(`[data-note="${noteIndex}"]`);
-            if (keyElement) keyElement.classList.remove('playing');
+            document.querySelector(`[data-note="${noteIndex}"]`).classList.remove('playing');
         }
 
         function drawOscilloscope() {
             const canvas = document.getElementById('oscilloscope');
-            const canvasCtx = canvas.getContext('2d');
-            const width = canvas.width = canvas.offsetWidth;
-            const height = canvas.height = canvas.offsetHeight;
-            
+            const canvasContext = canvas.getContext('2d');
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
             
             function draw() {
                 requestAnimationFrame(draw);
                 
                 analyser.getByteTimeDomainData(dataArray);
                 
-                canvasCtx.fillStyle = '#F8FBFC';
-                canvasCtx.fillRect(0, 0, width, height);
+                canvasContext.fillStyle = '#F8FBFC';
+                canvasContext.fillRect(0, 0, canvas.width, canvas.height);
                 
-                canvasCtx.lineWidth = 2;
-                canvasCtx.strokeStyle = '#4A57F9';
-                canvasCtx.beginPath();
+                canvasContext.lineWidth = 2;
+                canvasContext.strokeStyle = '#4A57F9';
+                canvasContext.beginPath();
                 
-                const sliceWidth = width / bufferLength;
+                const sliceWidth = canvas.width / bufferLength;
                 let x = 0;
                 
                 for (let i = 0; i < bufferLength; i++) {
                     const v = dataArray[i] / 128.0;
-                    const y = v * height / 2;
+                    const y = v * canvas.height / 2;
                     
                     if (i === 0) {
-                        canvasCtx.moveTo(x, y);
+                        canvasContext.moveTo(x, y);
                     } else {
-                        canvasCtx.lineTo(x, y);
+                        canvasContext.lineTo(x, y);
                     }
                     
                     x += sliceWidth;
                 }
                 
-                canvasCtx.lineTo(width, height / 2);
-                canvasCtx.stroke();
+                canvasContext.lineTo(canvas.width, canvas.height / 2);
+                canvasContext.stroke();
             }
             
             draw();
