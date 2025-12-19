@@ -142,11 +142,6 @@ AudioConnection          patchCord39(mixer2, 0, mixer4, 1);
 AudioConnection          patchCord40(mixer4, 0, filter1, 0);
 AudioConnection          patchCord41(filter1, 0, dac0, 0);
 AudioConnection          patchCord42(filter1, 0, peak1, 0);
-// GUItool: end automatically generated code
-
-
-
-int led = 29; // Pin del LED
 
 // Variabili per tenere traccia degli stati precedenti
 int lastOctave = -1;
@@ -170,7 +165,6 @@ float SI    = 493.9 / 4;
 // ----- SETUP -----
 
 void setup() {
-  pinMode(led, OUTPUT); 
   AudioMemory(64);  // Aumentato per il filtro
   Serial.begin(9600);
   

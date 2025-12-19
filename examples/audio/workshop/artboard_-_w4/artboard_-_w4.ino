@@ -109,10 +109,7 @@ AudioConnection          patchCord38(mixer1, 0, mixer4, 0);
 AudioConnection          patchCord39(mixer3, 0, mixer4, 2);
 AudioConnection          patchCord40(mixer4, dac0);
 AudioConnection          patchCord41(mixer4, peak1);
-// GUItool: end automatically generated code
 
-
-int led = 29; // Pin del LED
 
 //Note
 float DO    = 261.6 ;
@@ -129,7 +126,7 @@ float LAd   = 466.2 ;
 float SI    = 493.9;
 
 void setup() {
-  pinMode(led, OUTPUT); 
+  
   AudioMemory(24);
   Serial.begin(9600);
   

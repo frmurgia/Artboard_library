@@ -142,12 +142,7 @@ AudioConnection          patchCord38(mixer2, 0, mixer4, 1);
 AudioConnection          patchCord39(mixer3, 0, mixer4, 2);
 AudioConnection          patchCord40(mixer4, dac0);
 AudioConnection          patchCord41(mixer4, peak1);
-// GUItool: end automatically generated code
 
-// GUItool: end automatically generated code
-
-
-int led = 29; // Pin del LED
 
 // Variabile per tenere traccia dell'ottava precedente
 int lastOctave = -1;
@@ -170,7 +165,7 @@ float SI    = 493.9 / 4;
 // ----- SETUP -----
 
 void setup() {
-  pinMode(led, OUTPUT); 
+
   AudioMemory(24);
   Serial.begin(9600);
   
