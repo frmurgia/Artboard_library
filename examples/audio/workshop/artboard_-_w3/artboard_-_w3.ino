@@ -73,7 +73,7 @@ void loop() {
   int releaseTime = map(artboard.pot(1), 0, 1023, 5, 1000);
 
   // 2. Controlla se il pad touch è premuto
-  bool touchPremuto = (artboard.touch(0) > 8000);
+  bool touchPremuto = (artboard.touch(0) > 6000);
 
 
   // 3. Logica di "Edge Detection" (Rilevamento del cambiamento)
